@@ -6,7 +6,6 @@ import asseco.intership.task.login.model.Token;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import lombok.ToString;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

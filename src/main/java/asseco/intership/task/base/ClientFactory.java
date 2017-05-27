@@ -1,8 +1,6 @@
 package asseco.intership.task.base;
 
 import asseco.intership.task.util.PropertiesGetter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

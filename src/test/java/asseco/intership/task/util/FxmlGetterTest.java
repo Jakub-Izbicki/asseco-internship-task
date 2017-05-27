@@ -2,7 +2,6 @@ package asseco.intership.task.util;
 
 import asseco.intership.task.base.AbstractController;
 import asseco.intership.task.login.LoginController;
-import com.google.inject.Inject;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

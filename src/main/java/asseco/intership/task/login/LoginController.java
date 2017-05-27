@@ -1,8 +1,6 @@
 package asseco.intership.task.login;
 
 import asseco.intership.task.base.AbstractController;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
