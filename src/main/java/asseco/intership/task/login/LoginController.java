@@ -3,18 +3,25 @@ package asseco.intership.task.login;
 import asseco.intership.task.base.AbstractController;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import javax.inject.Inject;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@Singleton
 public class LoginController extends AbstractController {
 
     @FXML
-    private Text signInInfo;
+    Text signInInfo;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private TextField passwordTextField;
 
     private LoginService loginService;
 
@@ -29,6 +36,6 @@ public class LoginController extends AbstractController {
 
     @FXML
     protected void onSignInButtonPress(ActionEvent actionEvent) {
-        signInInfo.setText(getFxmlResourceBundle().getString("signInInfoWrongCredentials"));
+        loginService.login(usernameTextField.getText(), passwordTextField.getText());
     }
 }

@@ -40,6 +40,10 @@ public abstract class AbstractController implements Initializable {
         return stage;
     }
 
+    public String getMessage(String key) {
+        return getFxmlResourceBundle().getString(key);
+    }
+
     private URL getFxmlResourceUrl() {
         return getClass().getResource(FxmlGetter.getFxmlPath(this.getClass()));
     }
@@ -64,7 +68,7 @@ public abstract class AbstractController implements Initializable {
         return fxmlRoot;
     }
 
-    protected ResourceBundle getFxmlResourceBundle() {
+    private ResourceBundle getFxmlResourceBundle() {
         return ResourceBundle.getBundle(DEFAULT_BUNDLE);
     }
 }
