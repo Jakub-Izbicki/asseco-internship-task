@@ -3,6 +3,7 @@ package asseco.intership.task.login;
 import asseco.intership.task.auth.Auth;
 import asseco.intership.task.base.ClientFactory;
 import asseco.intership.task.login.model.Token;
+import asseco.intership.task.mainpage.MainPageController;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -19,12 +20,16 @@ class LoginService {
     private final static String AUTH_HEADER_FORMAT = "%s:%s";
 
     private final Provider<LoginController> loginControllerProvider;
+    private final Provider<MainPageController> mainPageControllerProvider;
     private final LoginClient loginClient;
     private final Auth auth;
 
     @Inject
-    public LoginService(Provider<LoginController> loginControllerProvider, Auth auth) {
+    public LoginService(Provider<LoginController> loginControllerProvider,
+                        Provider<MainPageController> mainPageControllerProvider,
+                        Auth auth) {
         this.loginControllerProvider = loginControllerProvider;
+        this.mainPageControllerProvider = mainPageControllerProvider;
         this.auth = auth;
         loginClient = ClientFactory.of(LoginClient.class);
     }
@@ -51,7 +56,8 @@ class LoginService {
                     onFailure(call, new IllegalStateException());
                 }
                 auth.setToken(token.getToken());
-                loginControllerProvider.get().enableSignInButton();
+                mainPageControllerProvider.get().showLater();
+                loginControllerProvider.get().closeLater();
             }
 
             @Override

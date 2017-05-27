@@ -3,6 +3,7 @@ package asseco.intership.task.base;
 import asseco.intership.task.App;
 import asseco.intership.task.util.FxmlGetter;
 import asseco.intership.task.util.PropertiesGetter;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -23,8 +24,9 @@ public abstract class AbstractController implements Initializable {
     private static final String COULD_NOT_LOAD_FXML = "Could not load FXML file from location: ";
 
     private Parent fxmlRoot;
+    private Stage stage;
 
-    public Stage createStage() throws IOException {
+    public Stage createStage() {
         final Parent root = loadFxml();
         PropertiesGetter prop = new PropertiesGetter();
         final Scene scene = new Scene(
@@ -37,7 +39,20 @@ public abstract class AbstractController implements Initializable {
         stage.setTitle(STAGE_TITLE);
         stage.setScene(scene);
         stage.sizeToScene();
+        this.stage = stage;
         return stage;
+    }
+
+    public void showLater() {
+        Platform.runLater(() -> {
+            createStage().show();
+        });
+    }
+
+    public void closeLater() {
+        Platform.runLater(() -> {
+            stage.close();
+        });
     }
 
     public String getMessage(String key) {
