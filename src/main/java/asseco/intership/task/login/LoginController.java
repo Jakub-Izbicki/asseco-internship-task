@@ -1,6 +1,7 @@
 package asseco.intership.task.login;
 
 import asseco.intership.task.base.AbstractController;
+import asseco.intership.task.mainpage.MainPageController;
 import com.google.inject.Singleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +17,7 @@ import java.util.ResourceBundle;
 public class LoginController extends AbstractController {
 
     @FXML
-    Text signInInfo;
+    private Text signInInfo;
     @FXML
     private Button signInButton;
     @FXML
@@ -24,11 +25,13 @@ public class LoginController extends AbstractController {
     @FXML
     private TextField passwordTextField;
 
-    private LoginService loginService;
+    private final LoginService loginService;
+    private final MainPageController mainPageController;
 
     @Inject
-    public LoginController(LoginService loginService) {
+    public LoginController(LoginService loginService, MainPageController mainPageController) {
         this.loginService = loginService;
+        this.mainPageController = mainPageController;
     }
 
     @Override
@@ -41,7 +44,22 @@ public class LoginController extends AbstractController {
         loginService.login(usernameTextField.getText(), passwordTextField.getText());
     }
 
-    public void enableSignInButton() {
+    void onValidCredentials() {
+        closeLater();
+        mainPageController.showLater();
+    }
+
+    void onEmptyCredentials() {
+        signInInfo.setText(getMessage("signInInfoEmptyInput"));
+        enableSignInButton();
+    }
+
+    void onInvalidCredentials() {
+        signInInfo.setText(getMessage("signInInfoWrongCredentials"));
+        enableSignInButton();
+    }
+
+    private void enableSignInButton() {
         signInButton.setDisable(false);
     }
 

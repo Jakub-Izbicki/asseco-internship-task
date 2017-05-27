@@ -3,7 +3,6 @@ package asseco.intership.task.login;
 import asseco.intership.task.auth.Auth;
 import asseco.intership.task.base.ClientFactory;
 import asseco.intership.task.login.model.Token;
-import asseco.intership.task.mainpage.MainPageController;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -20,25 +19,19 @@ class LoginService {
     private final static String AUTH_HEADER_FORMAT = "%s:%s";
 
     private final Provider<LoginController> loginControllerProvider;
-    private final Provider<MainPageController> mainPageControllerProvider;
     private final LoginClient loginClient;
     private final Auth auth;
 
     @Inject
-    public LoginService(Provider<LoginController> loginControllerProvider,
-                        Provider<MainPageController> mainPageControllerProvider,
-                        Auth auth) {
+    public LoginService(Provider<LoginController> loginControllerProvider, Auth auth) {
         this.loginControllerProvider = loginControllerProvider;
-        this.mainPageControllerProvider = mainPageControllerProvider;
         this.auth = auth;
         loginClient = ClientFactory.of(LoginClient.class);
     }
 
     void login(String username, String password) {
         if (isAnyNullOrEmpty(username, password)) {
-            loginControllerProvider.get().signInInfo
-                    .setText(loginControllerProvider.get().getMessage("signInInfoEmptyInput"));
-            loginControllerProvider.get().enableSignInButton();
+            loginControllerProvider.get().onEmptyCredentials();
             return;
         }
         String authHeader = BASIC_PREFIX +
@@ -56,15 +49,12 @@ class LoginService {
                     onFailure(call, new IllegalStateException());
                 }
                 auth.setToken(token.getToken());
-                mainPageControllerProvider.get().showLater();
-                loginControllerProvider.get().closeLater();
+                loginControllerProvider.get().onValidCredentials();
             }
 
             @Override
             public void onFailure(Call<Token> call, Throwable throwable) {
-                loginControllerProvider.get().signInInfo
-                        .setText(loginControllerProvider.get().getMessage("signInInfoWrongCredentials"));
-                loginControllerProvider.get().enableSignInButton();
+                loginControllerProvider.get().onInvalidCredentials();
             }
         });
     }
