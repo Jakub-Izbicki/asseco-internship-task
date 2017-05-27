@@ -33,6 +33,7 @@ class LoginService {
         if (isAnyNullOrEmpty(username, password)) {
             loginControllerProvider.get().signInInfo
                     .setText(loginControllerProvider.get().getMessage("signInInfoEmptyInput"));
+            loginControllerProvider.get().enableSignInButton();
             return;
         }
         String authHeader = BASIC_PREFIX +
@@ -50,12 +51,14 @@ class LoginService {
                     onFailure(call, new IllegalStateException());
                 }
                 auth.setToken(token.getToken());
+                loginControllerProvider.get().enableSignInButton();
             }
 
             @Override
             public void onFailure(Call<Token> call, Throwable throwable) {
                 loginControllerProvider.get().signInInfo
                         .setText(loginControllerProvider.get().getMessage("signInInfoWrongCredentials"));
+                loginControllerProvider.get().enableSignInButton();
             }
         });
     }
