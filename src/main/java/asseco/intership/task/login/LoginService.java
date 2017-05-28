@@ -40,23 +40,24 @@ class LoginService {
     }
 
     private void getToken(String authHeader) {
-        loginClient.getToken(authHeader).enqueue(new Callback<Token>() {
-            @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                Token token = response.body();
-                // because server returns 200 OK when credentials are invalid...
-                if (!token.isValid()) {
-                    onFailure(call, new IllegalStateException());
-                }
-                auth.setToken(token.getToken());
-                loginControllerProvider.get().onValidCredentials();
-            }
+        loginClient.getToken(authHeader)
+                .enqueue(new Callback<Token>() {
+                    @Override
+                    public void onResponse(Call<Token> call, Response<Token> response) {
+                        Token token = response.body();
+                        // because server returns 200 OK when credentials are invalid...
+                        if (!token.isValid()) {
+                            onFailure(call, new IllegalStateException());
+                        }
+                        auth.setToken(token.getToken());
+                        loginControllerProvider.get().onValidCredentials();
+                    }
 
-            @Override
-            public void onFailure(Call<Token> call, Throwable throwable) {
-                loginControllerProvider.get().onInvalidCredentials();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Token> call, Throwable throwable) {
+                        loginControllerProvider.get().onInvalidCredentials();
+                    }
+                });
     }
 
     private boolean isAnyNullOrEmpty(String... strings) {

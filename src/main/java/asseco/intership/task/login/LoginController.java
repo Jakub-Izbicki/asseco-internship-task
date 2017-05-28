@@ -2,6 +2,7 @@ package asseco.intership.task.login;
 
 import asseco.intership.task.base.AbstractController;
 import asseco.intership.task.user.UsersController;
+import asseco.intership.task.util.PropertiesGetter;
 import com.google.inject.Singleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,9 @@ import java.util.ResourceBundle;
 
 @Singleton
 public class LoginController extends AbstractController {
+
+    private static final String WINDOW_WIDTH_KEY = "window.large.width";
+    private static final String WINDOW_HEIGHT_KEY = "window.large.height";
 
     @FXML
     private Text signInInfo;
@@ -46,7 +50,10 @@ public class LoginController extends AbstractController {
 
     void onValidCredentials() {
         closeLater();
-        usersController.showLater();
+        PropertiesGetter prop = new PropertiesGetter();
+        usersController.showLater(
+                Double.parseDouble(prop.getProperty(WINDOW_WIDTH_KEY)),
+                Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_KEY)));
     }
 
     void onEmptyCredentials() {

@@ -27,12 +27,15 @@ public abstract class AbstractController implements Initializable {
     private Stage stage;
 
     public Stage createStage() {
-        final Parent root = loadFxml();
         PropertiesGetter prop = new PropertiesGetter();
-        final Scene scene = new Scene(
-                root,
+        return createStage(
                 Double.parseDouble(prop.getProperty(WINDOW_WIDTH_KEY)),
                 Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_KEY)));
+    }
+
+    public Stage createStage(double windowWidth, double windowHeight) {
+        final Parent root = loadFxml();
+        final Scene scene = new Scene(root, windowWidth, windowHeight);
         scene.getStylesheets().add(App.class.getResource(DEFAULT_CSS_FILE_PATH).toExternalForm());
 
         final Stage stage = new Stage();
@@ -43,19 +46,19 @@ public abstract class AbstractController implements Initializable {
         return stage;
     }
 
-    public void showLater() {
+    public void showLater(double windowWidth, double windowHeight) {
         Platform.runLater(() -> {
-            createStage().show();
+            createStage(windowWidth, windowHeight).show();
         });
     }
 
-    public void closeLater() {
+    protected void closeLater() {
         Platform.runLater(() -> {
             stage.close();
         });
     }
 
-    public String getMessage(String key) {
+    protected String getMessage(String key) {
         return getFxmlResourceBundle().getString(key);
     }
 
