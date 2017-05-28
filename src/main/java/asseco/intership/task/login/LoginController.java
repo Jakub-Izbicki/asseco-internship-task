@@ -1,7 +1,7 @@
 package asseco.intership.task.login;
 
 import asseco.intership.task.base.AbstractController;
-import asseco.intership.task.mainpage.MainPageController;
+import asseco.intership.task.user.UsersController;
 import com.google.inject.Singleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,12 +26,12 @@ public class LoginController extends AbstractController {
     private TextField passwordTextField;
 
     private final LoginService loginService;
-    private final MainPageController mainPageController;
+    private final UsersController usersController;
 
     @Inject
-    public LoginController(LoginService loginService, MainPageController mainPageController) {
+    public LoginController(LoginService loginService, UsersController usersController) {
         this.loginService = loginService;
-        this.mainPageController = mainPageController;
+        this.usersController = usersController;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class LoginController extends AbstractController {
 
     void onValidCredentials() {
         closeLater();
-        mainPageController.showLater();
+        usersController.showLater();
     }
 
     void onEmptyCredentials() {
