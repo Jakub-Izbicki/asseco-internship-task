@@ -1,12 +1,14 @@
 package asseco.intership.task.user;
 
 import asseco.intership.task.base.AbstractController;
+import asseco.intership.task.user.edit.EditUserController;
 import asseco.intership.task.user.model.User;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,7 +20,7 @@ import java.util.ResourceBundle;
 import static asseco.intership.task.user.model.User.*;
 
 @Singleton
-public class UsersController extends AbstractController {
+public class UserController extends AbstractController {
 
     @FXML
     private TableView<User> usersTableView;
@@ -32,23 +34,52 @@ public class UsersController extends AbstractController {
     private TableColumn<User, Integer> ageColumn;
     @FXML
     private TableColumn<User, String> ownerColumn;
+    @FXML
+    private Button editUserButton;
 
-    private final UsersService usersService;
+    private final UserService userService;
+    private final EditUserController editUserController;
 
     @Inject
-    public UsersController(UsersService usersService) {
-        this.usersService = usersService;
+    public UserController(UserService userService, EditUserController editUserController) {
+        this.userService = userService;
+        this.editUserController = editUserController;
+    }
+
+    public void initialize(){
+        initialize(null, null);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setUpEditButton();
         setUpTableViewWithColumns();
-        usersService.getUsers();
+        userService.getUsers();
+    }
+
+    public User getSelectedUser() {
+        return usersTableView.getSelectionModel().getSelectedItem();
+    }
+
+    @FXML
+    void onEditUserButtonPressed(ActionEvent actionEvent) {
+        editUserController.createStageAsPopup(this).show();
+        editUserController.initialize(null, null);
     }
 
     void showUsers(List<User> users) {
-        ObservableList<User> userViewObservableList = FXCollections.observableList(users);
-        usersTableView.setItems(userViewObservableList);
+        usersTableView.setItems(FXCollections.observableList(users));
+    }
+
+    private void setUpEditButton() {
+        editUserButton.setDisable(true);
+        usersTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                editUserButton.setDisable(false);
+            } else {
+                editUserButton.setDisable(true);
+            }
+        });
     }
 
     private void setUpTableViewWithColumns() {

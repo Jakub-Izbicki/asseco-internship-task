@@ -1,7 +1,7 @@
 package asseco.intership.task.login;
 
 import asseco.intership.task.base.AbstractController;
-import asseco.intership.task.user.UsersController;
+import asseco.intership.task.user.UserController;
 import asseco.intership.task.util.PropertiesGetter;
 import com.google.inject.Singleton;
 import javafx.event.ActionEvent;
@@ -30,12 +30,12 @@ public class LoginController extends AbstractController {
     private TextField passwordTextField;
 
     private final LoginService loginService;
-    private final UsersController usersController;
+    private final UserController userController;
 
     @Inject
-    public LoginController(LoginService loginService, UsersController usersController) {
+    public LoginController(LoginService loginService, UserController userController) {
         this.loginService = loginService;
-        this.usersController = usersController;
+        this.userController = userController;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class LoginController extends AbstractController {
     }
 
     @FXML
-    protected void onSignInButtonPress(ActionEvent actionEvent) {
+    void onSignInButtonPress(ActionEvent actionEvent) {
         disableSignInButton();
         loginService.login(usernameTextField.getText(), passwordTextField.getText());
     }
@@ -51,7 +51,7 @@ public class LoginController extends AbstractController {
     void onValidCredentials() {
         closeLater();
         PropertiesGetter prop = new PropertiesGetter();
-        usersController.showLater(
+        userController.showLater(
                 Double.parseDouble(prop.getProperty(WINDOW_WIDTH_KEY)),
                 Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_KEY)));
     }

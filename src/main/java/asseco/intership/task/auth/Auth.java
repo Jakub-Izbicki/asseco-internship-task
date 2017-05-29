@@ -2,16 +2,16 @@ package asseco.intership.task.auth;
 
 import com.google.inject.Singleton;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Singleton
 public class Auth {
 
+    private static final String TOKEN_PREFIX = "Token ";
+
     private String token;
 
-    public boolean isExpired() { //TODO: implement
-        return false;
+    public void setToken(String token) {
+        this.token = String.format("%s%s", TOKEN_PREFIX, token);
     }
 }

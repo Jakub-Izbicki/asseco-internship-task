@@ -14,9 +14,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static javafx.stage.Modality.WINDOW_MODAL;
+
 public abstract class AbstractController implements Initializable {
 
-    private static final String STAGE_TITLE = "Asseco internship client application";
+    private static final String STAGE_TITLE = "Asseco admin";
     private static final String DEFAULT_BUNDLE = "bundles.messages";
     private static final String DEFAULT_CSS_FILE_PATH = "/General.css";
     private static final String WINDOW_WIDTH_KEY = "window.small.width";
@@ -33,9 +35,24 @@ public abstract class AbstractController implements Initializable {
                 Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_KEY)));
     }
 
-    public Stage createStage(double windowWidth, double windowHeight) {
+    public Stage createStageAsPopup(AbstractController parentController) {
+        PropertiesGetter prop = new PropertiesGetter();
+        Stage stage = createStage(
+                Double.parseDouble(prop.getProperty(WINDOW_WIDTH_KEY)),
+                Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_KEY)));
+        stage.initModality(WINDOW_MODAL);
+        stage.initOwner(parentController.stage.getScene().getWindow());
+        return stage;
+    }
+
+    private Stage createStage(double windowWidth, double windowHeight) {
         final Parent root = loadFxml();
-        final Scene scene = new Scene(root, windowWidth, windowHeight);
+        final Scene scene;
+        if (isRootAlreadyRegisteredInStage(root)) {
+            scene = root.getScene();
+        } else {
+            scene = new Scene(root, windowWidth, windowHeight);
+        }
         scene.getStylesheets().add(App.class.getResource(DEFAULT_CSS_FILE_PATH).toExternalForm());
 
         final Stage stage = new Stage();
@@ -58,8 +75,16 @@ public abstract class AbstractController implements Initializable {
         });
     }
 
+    protected void close() {
+        stage.close();
+    }
+
     protected String getMessage(String key) {
         return getFxmlResourceBundle().getString(key);
+    }
+
+    private boolean isRootAlreadyRegisteredInStage(Parent root) {
+        return root.getScene() != null;
     }
 
     private URL getFxmlResourceUrl() {

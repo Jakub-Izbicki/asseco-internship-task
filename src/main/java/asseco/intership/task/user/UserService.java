@@ -13,23 +13,22 @@ import retrofit2.Response;
 import java.util.List;
 
 @Singleton
-class UsersService {
+class UserService {
 
-    private static final String TOKEN_PREFIX = "Token ";
-    private final Provider<UsersController> usersControllerProvider;
-    private final UsersClient usersClient;
+    private final Provider<UserController> usersControllerProvider;
+    private final UserClient userClient;
     private final Auth auth;
     private List<User> users;
 
     @Inject
-    public UsersService(Provider<UsersController> usersControllerProvider, Auth auth) {
+    public UserService(Provider<UserController> usersControllerProvider, Auth auth) {
         this.usersControllerProvider = usersControllerProvider;
         this.auth = auth;
-        usersClient = ClientFactory.of(UsersClient.class);
+        userClient = ClientFactory.of(UserClient.class);
     }
 
     void getUsers() {
-        usersClient.getUsers(String.format("%s%s", TOKEN_PREFIX, auth.getToken()))
+        userClient.getUsers(auth.getToken())
                 .enqueue(new Callback<List<User>>() {
                     @Override
                     public void onResponse(Call<List<User>> call, Response<List<User>> response) {
@@ -39,7 +38,7 @@ class UsersService {
 
                     @Override
                     public void onFailure(Call<List<User>> call, Throwable throwable) {
-                        System.out.println("FAILED"); //TODO: implement error handling
+                        System.out.println("GET USERS FAILED"); //TODO: implement error handling
                     }
                 });
     }

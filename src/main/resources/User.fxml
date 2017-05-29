@@ -105,7 +105,7 @@
                               <Font size="20.0" />
                            </font>
                         </Button>
-                        <Button fx:id="editUserButton" layoutX="520.0" layoutY="20.0" maxHeight="100.0" minWidth="100.0" mnemonicParsing="false" text="Button" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button fx:id="editUserButton" layoutX="520.0" layoutY="20.0" maxHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#onEditUserButtonPressed" text="%editUserButton" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>

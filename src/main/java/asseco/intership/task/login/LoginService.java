@@ -12,6 +12,8 @@ import retrofit2.Response;
 
 import java.util.Base64;
 
+import static asseco.intership.task.util.validation.StringValidator.isAnyNullOrEmpty;
+
 @Singleton
 class LoginService {
 
@@ -58,14 +60,5 @@ class LoginService {
                         loginControllerProvider.get().onInvalidCredentials();
                     }
                 });
-    }
-
-    private boolean isAnyNullOrEmpty(String... strings) {
-        for (String string : strings) {
-            if (string == null || string.isEmpty()) {
-                return true;
-            }
-        }
-        return false;
     }
 }
