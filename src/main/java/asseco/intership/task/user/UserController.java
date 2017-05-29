@@ -6,11 +6,14 @@ import asseco.intership.task.user.model.User;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -36,6 +39,8 @@ public class UserController extends AbstractController {
     private TableColumn<User, String> ownerColumn;
     @FXML
     private Button editUserButton;
+    @FXML
+    private TextField searchByUsernameTextField;
 
     private final UserService userService;
     private final EditUserController editUserController;
@@ -46,7 +51,7 @@ public class UserController extends AbstractController {
         this.editUserController = editUserController;
     }
 
-    public void initialize(){
+    public void initialize() {
         initialize(null, null);
     }
 
@@ -68,7 +73,7 @@ public class UserController extends AbstractController {
     }
 
     void showUsers(List<User> users) {
-        usersTableView.setItems(FXCollections.observableList(users));
+        setUpSearchFilterAndShowUsers(users);
     }
 
     private void setUpEditButton() {
@@ -88,5 +93,20 @@ public class UserController extends AbstractController {
         lastnameColumn.setCellValueFactory(new PropertyValueFactory<>(LASTNAME));
         ageColumn.setCellValueFactory(new PropertyValueFactory<>(AGE));
         ownerColumn.setCellValueFactory(new PropertyValueFactory<>(OWNER));
+    }
+
+    private void setUpSearchFilterAndShowUsers(List<User> users) {
+        FilteredList<User> filteredUsers = new FilteredList<>(FXCollections.observableList(users), p -> true);
+        searchByUsernameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredUsers.setPredicate(user ->
+                    isNullOrEmptyOrIsIn(newValue, user.getUsername()));
+        });
+        SortedList<User> sortedData = new SortedList<>(filteredUsers);
+        sortedData.comparatorProperty().bind(usersTableView.comparatorProperty());
+        usersTableView.setItems(sortedData);
+    }
+
+    private boolean isNullOrEmptyOrIsIn(String value, String compareTo) {
+        return value == null || value.isEmpty() || compareTo.toLowerCase().contains(value.toLowerCase());
     }
 }
