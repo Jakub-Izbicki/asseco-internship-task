@@ -27,7 +27,7 @@ public class UserOperationController extends AbstractController {
         setErrorMessage(getMessage("errorAgeNotNumeral"), errorText);
     }
 
-    private void setErrorMessage(String message, Text errorText) {
+    protected void setErrorMessage(String message, Text errorText) {
         errorText.setText(message);
     }
 }

@@ -12,6 +12,9 @@ public interface UserClient {
     @GET("/user")
     Call<List<User>> getUsers(@Header("Authorization") String token);
 
+    @GET("/user/{username}")
+    Call<User> getUser(@Header("Authorization") String token, @Path("username") String username);
+
     @POST("/user")
     Call<ApiResponse> createUser(@Header("Authorization") String token, @Body User newUser);
 

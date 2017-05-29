@@ -68,4 +68,8 @@ public class CreateUserController extends UserOperationController {
         usersControllerProvider.get().initialize();
         closeLater();
     }
+
+    void onUserAlreadyExists(){
+        setErrorMessage(getMessage("errorUserAlreadyExists"), addUserErrorInfo);
+    }
 }
