@@ -2,22 +2,28 @@ package asseco.intership.task.util.validation;
 
 import asseco.intership.task.user.model.User;
 
+import java.util.regex.Pattern;
+
 import static asseco.intership.task.util.validation.StringValidator.isAnyNullOrEmpty;
 import static asseco.intership.task.util.validation.UserValidator.UserValidation.*;
 
 public final class UserValidator {
 
+    private static final String NON_NUMERALS = "[^0-9]+";
     private static final int FIRST_CHARACTER = 0;
 
     private UserValidator() {
     }
 
     public static UserValidation validateUser(User user) {
-        if (isAnyNullOrEmpty(user.getFirstName(), user.getLastName()) || user.getAge() == null) {
+        if (isAnyNullOrEmpty(user.getFirstName(), user.getLastName(), user.getPassword(), user.getAge())) {
             return EMPTY_FIELDS;
         }
         if (!startsWithCapitalLetter(user.getFirstName(), user.getLastName())) {
             return NO_CAPITAL_LETTERS;
+        }
+        if (Pattern.matches(NON_NUMERALS, user.getAge())) {
+            return AGE_NOT_NUMERAL;
         }
         return OK;
     }
@@ -32,6 +38,6 @@ public final class UserValidator {
     }
 
     public enum UserValidation {
-        OK, EMPTY_FIELDS, NO_CAPITAL_LETTERS
+        OK, EMPTY_FIELDS, NO_CAPITAL_LETTERS, AGE_NOT_NUMERAL
     }
 }

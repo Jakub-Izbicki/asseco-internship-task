@@ -3,6 +3,7 @@ package asseco.intership.task.user.edit;
 import asseco.intership.task.auth.Auth;
 import asseco.intership.task.base.ClientFactory;
 import asseco.intership.task.user.UserClient;
+import asseco.intership.task.user.base.UserOperationService;
 import asseco.intership.task.user.model.User;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -11,10 +12,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static asseco.intership.task.util.validation.UserValidator.validateUser;
-
 @Singleton
-class EditUserService {
+class EditUserService extends UserOperationService {
 
     private final Provider<EditUserController> editUserControllerProvider;
     private final UserClient userClient;
@@ -28,7 +27,10 @@ class EditUserService {
     }
 
     void updateUser(User updatedUser) {
-        if (!isUserValid(updatedUser)) {
+        if (!isUserValid(
+                updatedUser,
+                editUserControllerProvider,
+                editUserControllerProvider.get().editUserErrorInfo)) {
             return;
         }
         userClient.updateUser(auth.getToken(), updatedUser.getUsername(), updatedUser).enqueue(new Callback<Void>() {
@@ -42,17 +44,5 @@ class EditUserService {
                 System.out.println("UPDATE USER FAILED"); //TODO: implement error handling
             }
         });
-    }
-
-    private boolean isUserValid(User user) {
-        switch (validateUser(user)) {
-            case EMPTY_FIELDS:
-                editUserControllerProvider.get().onEmptyFields();
-                return false;
-            case NO_CAPITAL_LETTERS:
-                editUserControllerProvider.get().onNoCapitalLetters();
-                return false;
-        }
-        return true;
     }
 }

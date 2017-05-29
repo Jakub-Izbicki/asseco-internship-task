@@ -1,10 +1,12 @@
 package asseco.intership.task.user.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     public static final String USERNAME = "username";
@@ -16,6 +18,7 @@ public class User {
     private String username;
     private String firstName;
     private String lastName;
-    private Integer age;
+    private String age;
     private String owner;
+    private String password;
 }

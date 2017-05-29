@@ -35,6 +35,10 @@ public abstract class AbstractController implements Initializable {
                 Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_KEY)));
     }
 
+    public void initialize(){
+        initialize(null, null);
+    }
+
     public Stage createStageAsPopup(AbstractController parentController) {
         PropertiesGetter prop = new PropertiesGetter();
         Stage stage = createStage(

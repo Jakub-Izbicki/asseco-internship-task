@@ -1,6 +1,7 @@
 package asseco.intership.task.user;
 
 import asseco.intership.task.base.AbstractController;
+import asseco.intership.task.user.create.CreateUserController;
 import asseco.intership.task.user.edit.EditUserController;
 import asseco.intership.task.user.model.User;
 import com.google.inject.Inject;
@@ -44,11 +45,13 @@ public class UserController extends AbstractController {
 
     private final UserService userService;
     private final EditUserController editUserController;
+    private final CreateUserController createUserController;
 
     @Inject
-    public UserController(UserService userService, EditUserController editUserController) {
+    public UserController(UserService userService, EditUserController editUserController, CreateUserController createUserController) {
         this.userService = userService;
         this.editUserController = editUserController;
+        this.createUserController = createUserController;
     }
 
     public void initialize() {
@@ -67,9 +70,15 @@ public class UserController extends AbstractController {
     }
 
     @FXML
+    void onAddUserButtonPressed(ActionEvent actionEvent) {
+        createUserController.createStageAsPopup(this).show();
+        createUserController.initialize();
+    }
+
+    @FXML
     void onEditUserButtonPressed(ActionEvent actionEvent) {
         editUserController.createStageAsPopup(this).show();
-        editUserController.initialize(null, null);
+        editUserController.initialize();
     }
 
     void showUsers(List<User> users) {

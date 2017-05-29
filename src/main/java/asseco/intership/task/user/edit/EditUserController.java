@@ -1,7 +1,7 @@
 package asseco.intership.task.user.edit;
 
-import asseco.intership.task.base.AbstractController;
 import asseco.intership.task.user.UserController;
+import asseco.intership.task.user.base.UserOperationController;
 import asseco.intership.task.user.model.User;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -14,10 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Singleton
-public class EditUserController extends AbstractController {
-
-    private static final String NUMERAL = "\\d*";
-    private static final String NON_NUMERAL = "[^\\d]";
+public class EditUserController extends UserOperationController {
 
     @FXML
     private TextField editFirstnameTextField;
@@ -28,7 +25,7 @@ public class EditUserController extends AbstractController {
     @FXML
     private Text editUserName;
     @FXML
-    private Text editUserErrorInfo;
+    Text editUserErrorInfo;
 
     private final EditUserService editUserService;
     private final Provider<UserController> usersControllerProvider;
@@ -50,23 +47,11 @@ public class EditUserController extends AbstractController {
         closeLater();
     }
 
-    void onEmptyFields() {
-        setErrorMessage(getMessage("editErrorEmptyFields"));
-    }
-
-    void onNoCapitalLetters() {
-        setErrorMessage(getMessage("editErrorNameCapitalLetters"));
-    }
-
-    private void setErrorMessage(String message) {
-        editUserErrorInfo.setText(message);
-    }
-
     @FXML
     private void onSaveEditButtonPress() {
         editedUser.setFirstName(editFirstnameTextField.getText());
         editedUser.setLastName(editLastnameTextField.getText());
-        editedUser.setAge(Integer.parseInt(editAgeTextField.getText()));
+        editedUser.setAge(editAgeTextField.getText());
         editUserService.updateUser(editedUser);
     }
 
@@ -78,21 +63,7 @@ public class EditUserController extends AbstractController {
     private void setEditFields() {
         editFirstnameTextField.setText(editedUser.getFirstName());
         editLastnameTextField.setText(editedUser.getLastName());
-        editAgeTextField.setText(editedUser.getAge().toString());
+        editAgeTextField.setText(editedUser.getAge());
         editUserName.setText(editedUser.getUsername());
-        setAgeFieldAcceptNumeralsOnly();
-    }
-
-    private void setAgeFieldAcceptNumeralsOnly() {
-        editAgeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches(NUMERAL)) {
-                handleAgeBadInput(newValue);
-            }
-        });
-    }
-
-    private void handleAgeBadInput(String input) {
-        editAgeTextField.setText(input.replaceAll(NON_NUMERAL, ""));
-        setErrorMessage(getMessage("errorAgeNotNumeral"));
     }
 }
