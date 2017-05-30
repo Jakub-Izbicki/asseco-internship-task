@@ -49,6 +49,10 @@ public abstract class AbstractController implements Initializable {
         return stage;
     }
 
+    public Parent getRootParent(){
+        return loadFxml();
+    }
+
     private Stage createStage(double windowWidth, double windowHeight) {
         final Parent root = loadFxml();
         final Scene scene;

@@ -50,7 +50,9 @@ public class UserController extends AbstractController {
     private final CreateUserController createUserController;
 
     @Inject
-    public UserController(UserService userService, EditUserController editUserController, CreateUserController createUserController) {
+    public UserController(UserService userService,
+                          EditUserController editUserController,
+                          CreateUserController createUserController) {
         this.userService = userService;
         this.editUserController = editUserController;
         this.createUserController = createUserController;
