@@ -6,6 +6,7 @@ import asseco.intership.task.user.edit.EditUserController;
 import asseco.intership.task.user.model.User;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static asseco.intership.task.user.model.User.*;
+import static javafx.scene.control.TableColumn.SortType.ASCENDING;
 
 @Singleton
 public class UserController extends AbstractController {
@@ -83,6 +85,7 @@ public class UserController extends AbstractController {
 
     void showUsers(List<User> users) {
         setUpSearchFilterAndShowUsers(users);
+        enableDefaultSorting();
     }
 
     private void setUpEditButton() {
@@ -113,6 +116,13 @@ public class UserController extends AbstractController {
         SortedList<User> sortedData = new SortedList<>(filteredUsers);
         sortedData.comparatorProperty().bind(usersTableView.comparatorProperty());
         usersTableView.setItems(sortedData);
+    }
+
+    private void enableDefaultSorting() {
+        Platform.runLater(() -> {
+            usernameColumn.setSortType(ASCENDING);
+            usersTableView.getSortOrder().add(usernameColumn);
+        });
     }
 
     private boolean isNullOrEmptyOrIsIn(String value, String compareTo) {
