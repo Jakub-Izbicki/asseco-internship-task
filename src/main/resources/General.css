@@ -32,3 +32,11 @@
     -fx-border-color: #5DE485;
     -fx-focus-color: #5DE485 ;
 }
+
+.table-view:focused{
+    -fx-border-color: #5DE485;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #5DE485;
+}

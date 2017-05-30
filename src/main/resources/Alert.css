@@ -1,6 +1,0 @@
-.label {
-    -fx-font-size: 16px;
-    -fx-font-weight: normal;
-    -fx-text-fill: orangered;
-    -fx-effect: dropshadow( gaussian , rgba(55,55,55,0.5) , 0,0,0,1 );
-}
