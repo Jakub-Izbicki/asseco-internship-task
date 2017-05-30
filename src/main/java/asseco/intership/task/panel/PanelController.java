@@ -37,12 +37,14 @@ public class PanelController extends AbstractController {
     void onCertificatesButtonPressed(ActionEvent actionEvent) {
         panelAnchorPane.getChildren().clear();
         panelAnchorPane.getChildren().add(certificateController.getRootParent());
+        certificateController.initialize();
     }
 
     @FXML
     void onUsersButtonPressed(ActionEvent actionEvent) {
         panelAnchorPane.getChildren().clear();
         panelAnchorPane.getChildren().add(userController.getRootParent());
+        userController.initialize();
     }
 
     private void initPanelSubstages() {
