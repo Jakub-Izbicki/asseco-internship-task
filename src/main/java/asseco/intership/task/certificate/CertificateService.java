@@ -1,7 +1,6 @@
 package asseco.intership.task.certificate;
 
 import asseco.intership.task.auth.Auth;
-import asseco.intership.task.base.ClientFactory;
 import asseco.intership.task.certificate.model.Certificate;
 import asseco.intership.task.certificate.model.PemCertificateRaw;
 import asseco.intership.task.util.CertFactory;
@@ -24,10 +23,11 @@ class CertificateService {
 
     @Inject
     public CertificateService(Provider<CertificateController> certificateControllerProvider,
-                              Auth auth) {
+                              Auth auth,
+                              CertificateClient certificateClient) {
         this.certificateControllerProvider = certificateControllerProvider;
         this.auth = auth;
-        this.certificateClient = ClientFactory.of(CertificateClient.class);
+        this.certificateClient = certificateClient;
     }
 
     void getCertificates() {

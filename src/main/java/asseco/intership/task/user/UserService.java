@@ -1,7 +1,6 @@
 package asseco.intership.task.user;
 
 import asseco.intership.task.auth.Auth;
-import asseco.intership.task.base.ClientFactory;
 import asseco.intership.task.user.model.User;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -21,10 +20,12 @@ class UserService {
     private List<User> users;
 
     @Inject
-    public UserService(Provider<UserController> usersControllerProvider, Auth auth) {
+    public UserService(Provider<UserController> usersControllerProvider,
+                       Auth auth,
+                       UserClient userClient) {
         this.usersControllerProvider = usersControllerProvider;
         this.auth = auth;
-        userClient = ClientFactory.of(UserClient.class);
+        this.userClient = userClient;
     }
 
     void getUsers() {

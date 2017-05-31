@@ -1,7 +1,6 @@
 package asseco.intership.task.login;
 
 import asseco.intership.task.auth.Auth;
-import asseco.intership.task.base.ClientFactory;
 import asseco.intership.task.login.model.Token;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -25,10 +24,12 @@ class LoginService {
     private final Auth auth;
 
     @Inject
-    public LoginService(Provider<LoginController> loginControllerProvider, Auth auth) {
+    public LoginService(Provider<LoginController> loginControllerProvider,
+                        Auth auth,
+                        LoginClient loginClient) {
         this.loginControllerProvider = loginControllerProvider;
         this.auth = auth;
-        loginClient = ClientFactory.of(LoginClient.class);
+        this.loginClient = loginClient;
     }
 
     void login(String username, String password) {

@@ -1,5 +1,6 @@
 package asseco.intership.task;
 
+import asseco.intership.task.base.ClientModule;
 import asseco.intership.task.login.LoginController;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -16,7 +17,7 @@ public class App extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        Guice.createInjector().injectMembers(this);
+        Guice.createInjector(new ClientModule()).injectMembers(this);
         loginController.createStage().show();
     }
 }
