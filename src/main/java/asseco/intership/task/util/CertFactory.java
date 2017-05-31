@@ -64,6 +64,7 @@ public final class CertFactory {
                 .commonName(getCommonNameOrThrow(x509Certificate))
                 .validFrom(getValidFrom(x509Certificate))
                 .validTo(getValidTo(x509Certificate))
+                .serialNumber(getSerialNumber(x509Certificate))
                 .build();
     }
 
@@ -82,5 +83,9 @@ public final class CertFactory {
 
     private static String getValidTo(X509Certificate x509Certificate) {
         return DATE_FORMAT.format(x509Certificate.getNotAfter());
+    }
+
+    private static String getSerialNumber(X509Certificate x509Certificate) {
+        return x509Certificate.getSerialNumber().toString();
     }
 }

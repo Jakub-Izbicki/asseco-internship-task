@@ -14,10 +14,12 @@ public class Certificate {
     public static final String VALID_FROM = "validFrom";
     public static final String VALID_TO = "validTo";
     public static final String OWNER = "owner";
+    public static final String SERIAL_NUMBER = "serialNumber";
 
     private String id;
     private String commonName;
     private String validFrom;
     private String validTo;
     private String owner;
+    private String serialNumber;
 }

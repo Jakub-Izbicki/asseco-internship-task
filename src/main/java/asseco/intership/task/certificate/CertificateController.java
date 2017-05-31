@@ -4,7 +4,6 @@ import asseco.intership.task.base.AbstractController;
 import asseco.intership.task.certificate.model.Certificate;
 import asseco.intership.task.user.create.CreateUserController;
 import asseco.intership.task.user.edit.EditUserController;
-import asseco.intership.task.user.model.User;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.collections.FXCollections;
@@ -27,15 +26,17 @@ public class CertificateController extends AbstractController {
     @FXML
     private TableView<Certificate> certTableView;
     @FXML
-    private TableColumn<User, String> certIdColumn;
+    private TableColumn<Certificate, String> certIdColumn;
     @FXML
-    private TableColumn<User, String> certCommonNameColumn;
+    private TableColumn<Certificate, String> certCommonNameColumn;
     @FXML
-    private TableColumn<User, String> certValidFromColumn;
+    private TableColumn<Certificate, String> certValidFromColumn;
     @FXML
-    private TableColumn<User, Integer> certValidToColumn;
+    private TableColumn<Certificate, String> certValidToColumn;
     @FXML
-    private TableColumn<User, String> certOwnerColumn;
+    private TableColumn<Certificate, String> certOwnerColumn;
+    @FXML
+    private TableColumn<Certificate, String> certSerialNumberColumn;
     @FXML
     private Button addCertificateButton;
     @FXML
@@ -110,5 +111,6 @@ public class CertificateController extends AbstractController {
         certValidFromColumn.setCellValueFactory(new PropertyValueFactory<>(VALID_FROM));
         certValidToColumn.setCellValueFactory(new PropertyValueFactory<>(VALID_TO));
         certOwnerColumn.setCellValueFactory(new PropertyValueFactory<>(OWNER));
+        certSerialNumberColumn.setCellValueFactory(new PropertyValueFactory<>(SERIAL_NUMBER));
     }
 }
