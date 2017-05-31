@@ -3,18 +3,18 @@ package asseco.intership.task.util.validation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-final class PasswordValidator {
+final class UsernameValidator {
 
     private static final Pattern SMALL_LETTER = Pattern.compile("[a-z]");
     private static final Pattern DIGIT = Pattern.compile("[0-9]");
     private static final int SMALL_LETTERS_MIN_AMOUNT = 2;
     private static final int DIGITS_AMOUNT = 2;
 
-    private PasswordValidator() {
+    private UsernameValidator() {
     }
 
-    static boolean isPasswordOk(String password) {
-        return hasAtLeastAmountOfSmallLetters(password) && hasExactAmountOfDigits(password);
+    static boolean isUsernameOk(String username) {
+        return hasAtLeastAmountOfSmallLetters(username) && hasExactAmountOfDigits(username);
     }
 
     private static boolean hasAtLeastAmountOfSmallLetters(String string) {

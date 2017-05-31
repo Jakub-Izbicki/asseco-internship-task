@@ -13,18 +13,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(DataProviderRunner.class)
 public class UserValidatorTest {
 
+    private static final String USERNAME = "JohnDoe20";
     private static final String USER_AGE = "20";
     private static final String USER_LASTNAME = "Doe";
     private static final String USER_FIRSTNAME = "John";
-    private static final String USER_PASSWORD = "string12";
+    private static final String USER_PASSWORD = "string";
+    private static final String INVALID_USERNAME = "JohnDoe20";
     private static final String INVALID_USER_AGE = null;
     private static final String INVALID_USER_LASTNAME = "doe";
     private static final String INVALID_USER_FIRSTNAME = "john";
-    private static final String INVALID_USER_PASSWORD = "p1";
+    private static final String INVALID_USER_PASSWORD = null;
 
     @DataProvider
     public static Object[] getValidUser() {
         final User user = new User();
+        user.setUsername(USERNAME);
         user.setAge(USER_AGE);
         user.setFirstName(USER_FIRSTNAME);
         user.setLastName(USER_LASTNAME);
@@ -35,6 +38,7 @@ public class UserValidatorTest {
     @DataProvider
     public static Object[] getInvalidUser() {
         final User user = new User();
+        user.setUsername(INVALID_USERNAME);
         user.setAge(INVALID_USER_AGE);
         user.setFirstName(INVALID_USER_LASTNAME);
         user.setLastName(INVALID_USER_FIRSTNAME);

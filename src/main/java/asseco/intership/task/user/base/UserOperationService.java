@@ -19,7 +19,7 @@ public abstract class UserOperationService {
             case AGE_NOT_NUMERAL:
                 provider.get().onAgeNotNumeral(errorText);
                 return false;
-            case PASSWORD_BAD_FORMAT:
+            case USERNAME_BAD_FORMAT:
                 provider.get().onPasswordFormatNotOk(errorText);
                 return false;
         }

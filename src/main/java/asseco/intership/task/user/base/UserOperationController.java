@@ -25,7 +25,7 @@ public class UserOperationController extends AbstractController {
     }
 
     void onPasswordFormatNotOk(Text errorText) {
-        setErrorMessage(getMessage("errorPasswordFormatNotOk"), errorText);
+        setErrorMessage(getMessage("usernamePasswordFormatNotOk"), errorText);
     }
 
     protected void setErrorMessage(String message, Text errorText) {

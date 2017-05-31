@@ -3,7 +3,7 @@ package asseco.intership.task.util.validation;
 import asseco.intership.task.user.model.User;
 import org.apache.commons.lang.StringUtils;
 
-import static asseco.intership.task.util.validation.PasswordValidator.isPasswordOk;
+import static asseco.intership.task.util.validation.UsernameValidator.isUsernameOk;
 import static asseco.intership.task.util.validation.StringValidator.isAnyNullOrEmpty;
 import static asseco.intership.task.util.validation.UserValidator.UserValidation.*;
 
@@ -24,8 +24,8 @@ public final class UserValidator {
         if (!StringUtils.isNumeric(user.getAge())) {
             return AGE_NOT_NUMERAL;
         }
-        if (!isPasswordOk(user.getPassword())) {
-            return PASSWORD_BAD_FORMAT;
+        if (!isUsernameOk(user.getUsername())) {
+            return USERNAME_BAD_FORMAT;
         }
         return OK;
     }
@@ -40,6 +40,6 @@ public final class UserValidator {
     }
 
     public enum UserValidation {
-        OK, EMPTY_FIELDS, NO_CAPITAL_LETTERS, AGE_NOT_NUMERAL, PASSWORD_BAD_FORMAT
+        OK, EMPTY_FIELDS, NO_CAPITAL_LETTERS, AGE_NOT_NUMERAL, USERNAME_BAD_FORMAT
     }
 }
