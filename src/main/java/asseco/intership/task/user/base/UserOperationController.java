@@ -8,9 +8,6 @@ import java.util.ResourceBundle;
 
 public class UserOperationController extends AbstractController {
 
-    private static final String NUMERAL = "\\d*";
-    private static final String NON_NUMERAL = "[^\\d]";
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -25,6 +22,10 @@ public class UserOperationController extends AbstractController {
 
     void onAgeNotNumeral(Text errorText) {
         setErrorMessage(getMessage("errorAgeNotNumeral"), errorText);
+    }
+
+    void onPasswordFormatNotOk(Text errorText) {
+        setErrorMessage(getMessage("errorPasswordFormatNotOk"), errorText);
     }
 
     protected void setErrorMessage(String message, Text errorText) {

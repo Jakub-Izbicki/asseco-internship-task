@@ -16,11 +16,11 @@ public class UserValidatorTest {
     private static final String USER_AGE = "20";
     private static final String USER_LASTNAME = "Doe";
     private static final String USER_FIRSTNAME = "John";
-    private static final String USER_PASSWORD = "string";
+    private static final String USER_PASSWORD = "string12";
     private static final String INVALID_USER_AGE = null;
     private static final String INVALID_USER_LASTNAME = "doe";
     private static final String INVALID_USER_FIRSTNAME = "john";
-    private static final String INVALID_USER_PASSWORD = "null";
+    private static final String INVALID_USER_PASSWORD = "p1";
 
     @DataProvider
     public static Object[] getValidUser() {

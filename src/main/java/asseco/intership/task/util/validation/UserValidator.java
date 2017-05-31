@@ -4,6 +4,7 @@ import asseco.intership.task.user.model.User;
 
 import java.util.regex.Pattern;
 
+import static asseco.intership.task.util.validation.PasswordValidator.isPasswordOk;
 import static asseco.intership.task.util.validation.StringValidator.isAnyNullOrEmpty;
 import static asseco.intership.task.util.validation.UserValidator.UserValidation.*;
 
@@ -25,6 +26,9 @@ public final class UserValidator {
         if (Pattern.matches(NON_NUMERALS, user.getAge())) {
             return AGE_NOT_NUMERAL;
         }
+        if (!isPasswordOk(user.getPassword())) {
+            return PASSWORD_BAD_FORMAT;
+        }
         return OK;
     }
 
@@ -38,6 +42,6 @@ public final class UserValidator {
     }
 
     public enum UserValidation {
-        OK, EMPTY_FIELDS, NO_CAPITAL_LETTERS, AGE_NOT_NUMERAL
+        OK, EMPTY_FIELDS, NO_CAPITAL_LETTERS, AGE_NOT_NUMERAL, PASSWORD_BAD_FORMAT
     }
 }

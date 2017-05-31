@@ -21,7 +21,7 @@ public final class CertFactory {
 
     private static final String EMPTY_STRING = "";
     private static final String CERTIFICATE_TYPE = "X.509";
-    private static final Pattern commonNamePattern = Pattern.compile("CN=([^,]*)");
+    private static final Pattern COMMON_NAME_PATTERN = Pattern.compile("CN=([^,]*)");
     private static final String COMMON_NAME_NOT_FOUND = "Common name not found.";
     private static final int COMMON_NAME_GROUP = 1;
     private static final Format DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
@@ -69,7 +69,7 @@ public final class CertFactory {
 
     private static String getCommonNameOrThrow(X509Certificate x509Certificate) {
         Matcher matcher =
-                commonNamePattern.matcher(x509Certificate.getSubjectX500Principal().getName());
+                COMMON_NAME_PATTERN.matcher(x509Certificate.getSubjectX500Principal().getName());
         if (matcher.find()) {
             return matcher.group(COMMON_NAME_GROUP);
         }
