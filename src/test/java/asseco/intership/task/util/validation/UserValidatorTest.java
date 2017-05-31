@@ -26,23 +26,25 @@ public class UserValidatorTest {
 
     @DataProvider
     public static Object[] getValidUser() {
-        final User user = new User();
-        user.setUsername(USERNAME);
-        user.setAge(USER_AGE);
-        user.setFirstName(USER_FIRSTNAME);
-        user.setLastName(USER_LASTNAME);
-        user.setPassword(USER_PASSWORD);
+        final User user = User.builder()
+                .username(USERNAME)
+                .age(USER_AGE)
+                .firstName(USER_FIRSTNAME)
+                .lastName(USER_LASTNAME)
+                .password(USER_PASSWORD)
+                .build();
         return new Object[]{user};
     }
 
     @DataProvider
     public static Object[] getInvalidUser() {
-        final User user = new User();
-        user.setUsername(INVALID_USERNAME);
-        user.setAge(INVALID_USER_AGE);
-        user.setFirstName(INVALID_USER_LASTNAME);
-        user.setLastName(INVALID_USER_FIRSTNAME);
-        user.setPassword(INVALID_USER_PASSWORD);
+        final User user = User.builder()
+                .username(INVALID_USERNAME)
+                .age(INVALID_USER_AGE)
+                .firstName(INVALID_USER_FIRSTNAME)
+                .lastName(INVALID_USER_LASTNAME)
+                .password(INVALID_USER_PASSWORD)
+                .build();
         return new Object[]{user};
     }
 
