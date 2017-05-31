@@ -41,7 +41,7 @@ public final class CertFactory {
         return certificates;
     }
 
-    private static Certificate of(PemCertificateRaw pemCertificateRaw)
+    static Certificate of(PemCertificateRaw pemCertificateRaw)
             throws CertificateException {
         String certificateNoHeaders = pemCertificateRaw.getRaw_bytes()
                 .replaceAll(X509Factory.BEGIN_CERT, EMPTY_STRING)
