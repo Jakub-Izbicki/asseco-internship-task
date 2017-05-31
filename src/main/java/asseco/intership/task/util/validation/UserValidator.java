@@ -1,8 +1,7 @@
 package asseco.intership.task.util.validation;
 
 import asseco.intership.task.user.model.User;
-
-import java.util.regex.Pattern;
+import org.apache.commons.lang.StringUtils;
 
 import static asseco.intership.task.util.validation.PasswordValidator.isPasswordOk;
 import static asseco.intership.task.util.validation.StringValidator.isAnyNullOrEmpty;
@@ -10,7 +9,6 @@ import static asseco.intership.task.util.validation.UserValidator.UserValidation
 
 public final class UserValidator {
 
-    private static final String NON_NUMERALS = "[^0-9]+";
     private static final int FIRST_CHARACTER = 0;
 
     private UserValidator() {
@@ -23,7 +21,7 @@ public final class UserValidator {
         if (!startsWithCapitalLetter(user.getFirstName(), user.getLastName())) {
             return NO_CAPITAL_LETTERS;
         }
-        if (Pattern.matches(NON_NUMERALS, user.getAge())) {
+        if (!StringUtils.isNumeric(user.getAge())) {
             return AGE_NOT_NUMERAL;
         }
         if (!isPasswordOk(user.getPassword())) {
