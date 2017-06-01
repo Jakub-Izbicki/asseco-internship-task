@@ -2,8 +2,8 @@ package asseco.intership.task.certificate;
 
 import asseco.intership.task.base.AbstractController;
 import asseco.intership.task.certificate.delete.DeleteCertificateController;
+import asseco.intership.task.certificate.download.DownloadCertificateController;
 import asseco.intership.task.certificate.model.Certificate;
-import asseco.intership.task.user.create.CreateUserController;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.collections.FXCollections;
@@ -46,16 +46,15 @@ public class CertificateController extends AbstractController {
 
     private final CertificateService certificateService;
     private final DeleteCertificateController deleteCertificateController;
-//    private final EditUserController editUserController;
-//    private final CreateUserController createUserController;
+    private final DownloadCertificateController downloadCertificateController;
 
     @Inject
     public CertificateController(CertificateService certificateService,
                                  DeleteCertificateController deleteCertificateController,
-                                 CreateUserController createUserController) {
+                                 DownloadCertificateController downloadCertificateController) {
         this.certificateService = certificateService;
         this.deleteCertificateController = deleteCertificateController;
-//        this.createUserController = createUserController;
+        this.downloadCertificateController = downloadCertificateController;
     }
 
     public void initialize() {
@@ -69,20 +68,19 @@ public class CertificateController extends AbstractController {
         certificateService.getCertificates();
     }
 
-    public String getSelectedCertificateId() {
-        return certTableView.getSelectionModel().getSelectedItem().getId();
+    public Certificate getSelectedCertificate() {
+        return certTableView.getSelectionModel().getSelectedItem();
     }
 
     @FXML
     void onAddCertificateButtonPressed(ActionEvent actionEvent) {
-//        createUserController.createStageAsPopup(this).show();
-//        createUserController.initialize();
+        //TODO: implement
     }
 
     @FXML
     void onDownloadCertificateButtonPressed(ActionEvent actionEvent) {
-//        editUserController.createStageAsPopup(this).show();
-//        editUserController.initialize();
+        downloadCertificateController.createStageAsSmallPopup(this).show();
+        downloadCertificateController.initialize();
     }
 
     @FXML

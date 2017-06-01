@@ -56,6 +56,7 @@ public final class CertFactory {
         Certificate certificate = of(x509Certificate);
         certificate.setId(pemCertificateRaw.getId());
         certificate.setOwner(pemCertificateRaw.getOwner());
+        certificate.setRawData(pemCertificateRaw.getRaw_bytes());
         return certificate;
     }
 

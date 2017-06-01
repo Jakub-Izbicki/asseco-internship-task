@@ -41,6 +41,10 @@ public abstract class AbstractController implements Initializable {
         initialize(null, null);
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
     public Stage createStageAsSmallPopup(AbstractController parentController) {
         PropertiesGetter prop = new PropertiesGetter();
         return createStageAsPopup(

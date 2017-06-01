@@ -37,11 +37,6 @@ public class DeleteCertificateController extends AbstractController {
                 POPUP_MESSAGE_FORMAT, getMessage("deleteCertificatePopup"), deletedCertificateId));
     }
 
-    void onCertificateDelete() {
-        certificateControllerProvider.get().initialize();
-        closeLater();
-    }
-
     @FXML
     void onDelete(ActionEvent actionEvent) {
         deleteCertificateService.deleteCertificate(deletedCertificateId);
@@ -52,7 +47,12 @@ public class DeleteCertificateController extends AbstractController {
         close();
     }
 
+    void onCertificateDelete() {
+        certificateControllerProvider.get().initialize();
+        closeLater();
+    }
+
     private String getDeletedCertificateId() {
-        return certificateControllerProvider.get().getSelectedCertificateId();
+        return certificateControllerProvider.get().getSelectedCertificate().getId();
     }
 }

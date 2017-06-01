@@ -22,4 +22,5 @@ public class Certificate {
     private String validTo;
     private String owner;
     private String serialNumber;
+    private String rawData;
 }
