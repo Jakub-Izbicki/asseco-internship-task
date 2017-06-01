@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public final class CertFactory {
 
     private static final String EMPTY_STRING = "";
-    private static final String CERTIFICATE_TYPE = "X.509";
+    private static final String CERTIFICATE_X509 = "X.509";
     private static final Pattern COMMON_NAME_PATTERN = Pattern.compile("CN=([^,]*)");
     private static final String COMMON_NAME_NOT_FOUND = "Common name not found.";
     private static final int COMMON_NAME_GROUP = 1;
@@ -48,7 +48,7 @@ public final class CertFactory {
                 .replaceAll(X509Factory.END_CERT, EMPTY_STRING);
         X509Certificate x509Certificate = null;
         try {
-            x509Certificate = (X509Certificate) CertificateFactory.getInstance(CERTIFICATE_TYPE)
+            x509Certificate = (X509Certificate) CertificateFactory.getInstance(CERTIFICATE_X509)
                     .generateCertificate(new ByteArrayInputStream(Base64.decode(certificateNoHeaders)));
         } catch (Base64DecodingException e) {
             e.printStackTrace();
