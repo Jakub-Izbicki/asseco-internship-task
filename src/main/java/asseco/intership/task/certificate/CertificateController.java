@@ -1,9 +1,9 @@
 package asseco.intership.task.certificate;
 
 import asseco.intership.task.base.AbstractController;
+import asseco.intership.task.certificate.delete.DeleteCertificateController;
 import asseco.intership.task.certificate.model.Certificate;
 import asseco.intership.task.user.create.CreateUserController;
-import asseco.intership.task.user.edit.EditUserController;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.collections.FXCollections;
@@ -45,15 +45,16 @@ public class CertificateController extends AbstractController {
     private Button removeCertificateButton;
 
     private final CertificateService certificateService;
+    private final DeleteCertificateController deleteCertificateController;
 //    private final EditUserController editUserController;
 //    private final CreateUserController createUserController;
 
     @Inject
     public CertificateController(CertificateService certificateService,
-                                 EditUserController editUserController,
+                                 DeleteCertificateController deleteCertificateController,
                                  CreateUserController createUserController) {
         this.certificateService = certificateService;
-//        this.editUserController = editUserController;
+        this.deleteCertificateController = deleteCertificateController;
 //        this.createUserController = createUserController;
     }
 
@@ -68,9 +69,9 @@ public class CertificateController extends AbstractController {
         certificateService.getCertificates();
     }
 
-//    public User getSelectedUser() {
-//        return usersTableView.getSelectionModel().getSelectedItem();
-//    }
+    public String getSelectedCertificateId() {
+        return certTableView.getSelectionModel().getSelectedItem().getId();
+    }
 
     @FXML
     void onAddCertificateButtonPressed(ActionEvent actionEvent) {
@@ -86,15 +87,15 @@ public class CertificateController extends AbstractController {
 
     @FXML
     void onRemoveCertificateButtonPressed(ActionEvent actionEvent) {
-//        editUserController.createStageAsPopup(this).show();
-//        editUserController.initialize();
+        deleteCertificateController.createStageAsSmallPopup(this).show();
+        deleteCertificateController.initialize();
     }
 
     void showCertificates(List<Certificate> certificates) {
         certTableView.setItems(FXCollections.observableList(certificates));
     }
 
-    private void setUpDisabledButtons(){
+    private void setUpDisabledButtons() {
         setUpDisabledButtonListener(downloadCertificateButton);
         setUpDisabledButtonListener(removeCertificateButton);
     }

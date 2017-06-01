@@ -53,7 +53,6 @@ class LoginService {
                             onFailure(call, new IllegalStateException());
                         }
                         auth.setToken(token.getToken());
-                        System.out.println(auth.getToken());
                         loginControllerProvider.get().onValidCredentials();
                     }
 

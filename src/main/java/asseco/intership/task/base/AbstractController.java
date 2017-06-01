@@ -21,8 +21,10 @@ public abstract class AbstractController implements Initializable {
     private static final String STAGE_TITLE = "Asseco admin";
     private static final String DEFAULT_BUNDLE = "bundles.messages";
     private static final String DEFAULT_CSS_FILE_PATH = "/General.css";
-    private static final String WINDOW_WIDTH_KEY = "window.small.width";
-    private static final String WINDOW_HEIGHT_KEY = "window.small.height";
+    private static final String WINDOW_WIDTH_SMALL_KEY = "window.small.width";
+    private static final String WINDOW_HEIGHT_SMALL_KEY = "window.small.height";
+    private static final String WINDOW_WIDTH_VERY_SMALL_KEY = "window.very.small.width";
+    private static final String WINDOW_HEIGHT_VERY_SMALL_KEY = "window.very.small.height";
     private static final String COULD_NOT_LOAD_FXML = "Could not load FXML file from location: ";
 
     private Parent fxmlRoot;
@@ -31,25 +33,38 @@ public abstract class AbstractController implements Initializable {
     public Stage createStage() {
         PropertiesGetter prop = new PropertiesGetter();
         return createStage(
-                Double.parseDouble(prop.getProperty(WINDOW_WIDTH_KEY)),
-                Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_KEY)));
+                Double.parseDouble(prop.getProperty(WINDOW_WIDTH_SMALL_KEY)),
+                Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_SMALL_KEY)));
     }
 
-    public void initialize(){
+    public void initialize() {
         initialize(null, null);
+    }
+
+    public Stage createStageAsSmallPopup(AbstractController parentController) {
+        PropertiesGetter prop = new PropertiesGetter();
+        return createStageAsPopup(
+                parentController,
+                Double.parseDouble(prop.getProperty(WINDOW_WIDTH_VERY_SMALL_KEY)),
+                Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_VERY_SMALL_KEY)));
     }
 
     public Stage createStageAsPopup(AbstractController parentController) {
         PropertiesGetter prop = new PropertiesGetter();
-        Stage stage = createStage(
-                Double.parseDouble(prop.getProperty(WINDOW_WIDTH_KEY)),
-                Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_KEY)));
+        return createStageAsPopup(
+                parentController,
+                Double.parseDouble(prop.getProperty(WINDOW_WIDTH_SMALL_KEY)),
+                Double.parseDouble(prop.getProperty(WINDOW_HEIGHT_SMALL_KEY)));
+    }
+
+    private Stage createStageAsPopup(AbstractController parentController, double windowWidth, double windowHeight) {
+        Stage stage = createStage(windowWidth, windowHeight);
         stage.initModality(WINDOW_MODAL);
         stage.initOwner(parentController.stage.getScene().getWindow());
         return stage;
     }
 
-    public Parent getRootParent(){
+    public Parent getRootParent() {
         return loadFxml();
     }
 
