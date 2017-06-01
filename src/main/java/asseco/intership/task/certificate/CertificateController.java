@@ -63,7 +63,7 @@ public class CertificateController extends AbstractController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setUpRemoveCertificateButton();
+        setUpDisabledButtons();
         setUpTableViewWithColumns();
         certificateService.getCertificates();
     }
@@ -94,13 +94,18 @@ public class CertificateController extends AbstractController {
         certTableView.setItems(FXCollections.observableList(certificates));
     }
 
-    private void setUpRemoveCertificateButton() {
-        removeCertificateButton.setDisable(true);
+    private void setUpDisabledButtons(){
+        setUpDisabledButtonListener(downloadCertificateButton);
+        setUpDisabledButtonListener(removeCertificateButton);
+    }
+
+    private void setUpDisabledButtonListener(Button button) {
+        button.setDisable(true);
         certTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                removeCertificateButton.setDisable(false);
+                button.setDisable(false);
             } else {
-                removeCertificateButton.setDisable(true);
+                button.setDisable(true);
             }
         });
     }
