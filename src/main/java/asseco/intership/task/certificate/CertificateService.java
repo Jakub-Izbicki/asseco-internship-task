@@ -7,10 +7,12 @@ import asseco.intership.task.util.CertFactory;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
+import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.security.cert.CertificateException;
 import java.util.List;
 
 @Singleton
@@ -34,7 +36,11 @@ class CertificateService {
         certificateClient.getCertificates(auth.getToken()).enqueue(new Callback<List<PemCertificateRaw>>() {
             @Override
             public void onResponse(Call<List<PemCertificateRaw>> call, Response<List<PemCertificateRaw>> response) {
-                certificates = CertFactory.of(response.body());
+                try {
+                    certificates = CertFactory.of(response.body());
+                } catch (CertificateException | Base64DecodingException e) {
+                    onFailure(null, null);
+                }
                 certificateControllerProvider.get().showCertificates(certificates);
             }
 

@@ -2,6 +2,7 @@ package asseco.intership.task.util;
 
 import asseco.intership.task.certificate.model.Certificate;
 import asseco.intership.task.certificate.model.PemCertificateRaw;
+import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
@@ -23,7 +24,8 @@ public class CertFactoryTest {
     @Test
     @UseDataProvider(value = "getValidPemRawAndCertificate",
             location = CertFactoryDataProvider.class)
-    public void shouldProduceCertificate(String rawPemCertificate, Certificate validCertificate) throws CertificateException {
+    public void shouldProduceCertificate(String rawPemCertificate, Certificate validCertificate)
+            throws CertificateException, Base64DecodingException {
         PemCertificateRaw pemCertificateRaw =
                 new PemCertificateRaw(ID, OWNER, rawPemCertificate);
         Certificate certificate = CertFactory.of(pemCertificateRaw);
@@ -34,7 +36,8 @@ public class CertFactoryTest {
     @Test
     @UseDataProvider(value = "getValidPemRawAndCertificate",
             location = CertFactoryDataProvider.class)
-    public void shouldProduceErrorWhenInvalidRawPem(String rawPemCertificate, Certificate validCertificate) throws CertificateException {
+    public void shouldProduceErrorWhenInvalidRawPem(String rawPemCertificate, Certificate validCertificate)
+            throws CertificateException {
         rawPemCertificate = rawPemCertificate.replaceAll(RANDOM_SYMBOL, RANDOM_SYMBOL_2);
         PemCertificateRaw pemCertificateRaw =
                 new PemCertificateRaw(ID, OWNER, rawPemCertificate);

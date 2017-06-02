@@ -29,7 +29,8 @@ public final class CertFactory {
     private CertFactory() {
     }
 
-    public static List<Certificate> of(List<PemCertificateRaw> rawPemCertificates) {
+    public static List<Certificate> of(List<PemCertificateRaw> rawPemCertificates)
+            throws CertificateException, Base64DecodingException {
         List<Certificate> certificates = new ArrayList<>();
         for (PemCertificateRaw rawCertificate : rawPemCertificates) {
             certificates.add(of(rawCertificate));
@@ -37,17 +38,14 @@ public final class CertFactory {
         return certificates;
     }
 
-    static Certificate of(PemCertificateRaw pemCertificateRaw) {
+    static Certificate of(PemCertificateRaw pemCertificateRaw)
+            throws CertificateException, Base64DecodingException {
         String certificateNoHeaders = pemCertificateRaw.getRaw_bytes()
                 .replaceAll(X509Factory.BEGIN_CERT, EMPTY_STRING)
                 .replaceAll(X509Factory.END_CERT, EMPTY_STRING);
         X509Certificate x509Certificate = null;
-        try {
-            x509Certificate = (X509Certificate) CertificateFactory.getInstance(CERTIFICATE_X509)
-                    .generateCertificate(new ByteArrayInputStream(Base64.decode(certificateNoHeaders)));
-        } catch (CertificateException | Base64DecodingException e) {
-            e.printStackTrace(); // TODO implemennt error handling
-        }
+        x509Certificate = (X509Certificate) CertificateFactory.getInstance(CERTIFICATE_X509)
+                .generateCertificate(new ByteArrayInputStream(Base64.decode(certificateNoHeaders)));
         Certificate certificate = of(x509Certificate);
         certificate.setId(pemCertificateRaw.getId());
         certificate.setOwner(pemCertificateRaw.getOwner());
