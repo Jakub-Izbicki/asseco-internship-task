@@ -24,9 +24,6 @@ public final class UserValidator {
         if (!StringUtils.isNumeric(user.getAge())) {
             return AGE_NOT_NUMERAL;
         }
-        if (!isUsernameOk(user.getUsername())) {
-            return USERNAME_BAD_FORMAT;
-        }
         return OK;
     }
 

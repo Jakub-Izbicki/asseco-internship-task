@@ -15,6 +15,8 @@ import retrofit2.Response;
 
 import java.io.IOException;
 
+import static asseco.intership.task.util.validation.UsernameValidator.isUsernameOk;
+
 @Singleton
 class CreateUserService extends UserOperationService {
 
@@ -36,8 +38,10 @@ class CreateUserService extends UserOperationService {
                 createUserControllerProvider.get().addUserErrorInfo)) {
             return;
         }
-        if (userExists(newUser))
-        {
+        if (isUsernameOk(newUser.getUsername())) {
+            createUserControllerProvider.get().onUsernameFormatNotOk();
+        }
+        if (userExists(newUser)) {
             createUserControllerProvider.get().onUserAlreadyExists();
             return;
         }
@@ -54,14 +58,13 @@ class CreateUserService extends UserOperationService {
         });
     }
 
-    private boolean userExists(User user){
+    private boolean userExists(User user) {
         Response<User> foundUser = null;
         try {
             foundUser = userClient.getUser(auth.getToken(), user.getUsername()).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         //because server returns OK when user not found
         return !(foundUser == null || (foundUser.body().getUsername() == null));
     }

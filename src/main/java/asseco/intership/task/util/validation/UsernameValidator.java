@@ -3,7 +3,7 @@ package asseco.intership.task.util.validation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-final class UsernameValidator {
+public final class UsernameValidator {
 
     private static final Pattern SMALL_LETTER = Pattern.compile("[a-z]");
     private static final Pattern DIGIT = Pattern.compile("[0-9]");
@@ -13,7 +13,7 @@ final class UsernameValidator {
     private UsernameValidator() {
     }
 
-    static boolean isUsernameOk(String username) {
+    public static boolean isUsernameOk(String username) {
         return hasAtLeastAmountOfSmallLetters(username) && hasExactAmountOfDigits(username);
     }
 

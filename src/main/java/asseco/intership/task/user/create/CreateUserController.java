@@ -69,7 +69,11 @@ public class CreateUserController extends UserOperationController {
         closeLater();
     }
 
-    void onUserAlreadyExists(){
+    void onUsernameFormatNotOk() {
+        setErrorMessage(getMessage("usernamePasswordFormatNotOk"), addUserErrorInfo);
+    }
+
+    void onUserAlreadyExists() {
         setErrorMessage(getMessage("errorUserAlreadyExists"), addUserErrorInfo);
     }
 }
