@@ -38,14 +38,18 @@ public final class CertFactory {
         return certificates;
     }
 
-    static Certificate of(PemCertificateRaw pemCertificateRaw)
+    public static X509Certificate of(String pemRawBytes)
             throws CertificateException, Base64DecodingException {
-        String certificateNoHeaders = pemCertificateRaw.getRaw_bytes()
+        String certificateNoHeaders = pemRawBytes
                 .replaceAll(X509Factory.BEGIN_CERT, EMPTY_STRING)
                 .replaceAll(X509Factory.END_CERT, EMPTY_STRING);
-        X509Certificate x509Certificate = null;
-        x509Certificate = (X509Certificate) CertificateFactory.getInstance(CERTIFICATE_X509)
+        return (X509Certificate) CertificateFactory.getInstance(CERTIFICATE_X509)
                 .generateCertificate(new ByteArrayInputStream(Base64.decode(certificateNoHeaders)));
+    }
+
+    static Certificate of(PemCertificateRaw pemCertificateRaw)
+            throws CertificateException, Base64DecodingException {
+        X509Certificate x509Certificate = of(pemCertificateRaw.getRaw_bytes());
         Certificate certificate = of(x509Certificate);
         certificate.setId(pemCertificateRaw.getId());
         certificate.setOwner(pemCertificateRaw.getOwner());

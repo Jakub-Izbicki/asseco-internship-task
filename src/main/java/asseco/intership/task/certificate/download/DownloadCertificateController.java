@@ -34,6 +34,13 @@ public class DownloadCertificateController extends AbstractController {
     }
 
     @FXML
+    private void onDownloadCer() {
+        Certificate certificate = certificateControllerProvider.get().getSelectedCertificate();
+        downloadCertificateService.downloadCer(certificate);
+        close();
+    }
+
+    @FXML
     private void onCancel() {
         close();
     }
