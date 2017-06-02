@@ -39,6 +39,6 @@ public class CertFactoryTest {
         PemCertificateRaw pemCertificateRaw =
                 new PemCertificateRaw(ID, OWNER, rawPemCertificate);
         assertThatThrownBy(() -> CertFactory.of(pemCertificateRaw))
-                .isInstanceOf(CertificateException.class);
+                .isInstanceOf(NullPointerException.class);
     }
 }

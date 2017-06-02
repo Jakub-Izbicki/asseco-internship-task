@@ -43,7 +43,6 @@ public final class CertFactory {
                 .replaceAll(X509Factory.END_CERT, EMPTY_STRING);
         X509Certificate x509Certificate = null;
         try {
-            System.out.println(new String(Base64.decode(certificateNoHeaders)));
             x509Certificate = (X509Certificate) CertificateFactory.getInstance(CERTIFICATE_X509)
                     .generateCertificate(new ByteArrayInputStream(Base64.decode(certificateNoHeaders)));
         } catch (CertificateException | Base64DecodingException e) {

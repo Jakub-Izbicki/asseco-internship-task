@@ -15,6 +15,7 @@ public class CertFactoryDataProvider {
     private static final String VALID_FROM = "24-10-2016";
     private static final String VALID_TO = "24-10-2017";
     private static final String RAW_DATA_FILE = "testCertificate.pem";
+    private static final String SERIAL_NUMBER = "1";
 
     @DataProvider
     public static Object[][] getValidPemRawAndCertificate() throws IOException {
@@ -24,9 +25,11 @@ public class CertFactoryDataProvider {
                 .validFrom(VALID_FROM)
                 .validTo(VALID_TO)
                 .owner(OWNER)
+                .rawData(getRawData())
+                .serialNumber(SERIAL_NUMBER)
                 .build();
 
-        return new Object[][]{{getRawData(), certificate}};
+        return new Object[][]{{certificate.getRawData(), certificate}};
     }
 
     private static String getRawData() throws IOException {
