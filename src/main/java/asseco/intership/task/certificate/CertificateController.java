@@ -1,6 +1,7 @@
 package asseco.intership.task.certificate;
 
 import asseco.intership.task.base.AbstractController;
+import asseco.intership.task.certificate.create.CreateCertificateService;
 import asseco.intership.task.certificate.delete.DeleteCertificateController;
 import asseco.intership.task.certificate.download.DownloadCertificateController;
 import asseco.intership.task.certificate.model.Certificate;
@@ -45,14 +46,17 @@ public class CertificateController extends AbstractController {
     private Button removeCertificateButton;
 
     private final CertificateService certificateService;
+    private final CreateCertificateService createCertificateService;
     private final DeleteCertificateController deleteCertificateController;
     private final DownloadCertificateController downloadCertificateController;
 
     @Inject
     public CertificateController(CertificateService certificateService,
+                                 CreateCertificateService createCertificateService,
                                  DeleteCertificateController deleteCertificateController,
                                  DownloadCertificateController downloadCertificateController) {
         this.certificateService = certificateService;
+        this.createCertificateService = createCertificateService;
         this.deleteCertificateController = deleteCertificateController;
         this.downloadCertificateController = downloadCertificateController;
     }
@@ -74,7 +78,7 @@ public class CertificateController extends AbstractController {
 
     @FXML
     void onAddCertificateButtonPressed(ActionEvent actionEvent) {
-        //TODO: implement
+        createCertificateService.createCertificate();
     }
 
     @FXML

@@ -18,8 +18,8 @@ import static javafx.stage.Modality.WINDOW_MODAL;
 
 public abstract class AbstractController implements Initializable {
 
+    public static final String DEFAULT_BUNDLE = "bundles.messages";
     private static final String STAGE_TITLE = "Asseco admin";
-    private static final String DEFAULT_BUNDLE = "bundles.messages";
     private static final String DEFAULT_CSS_FILE_PATH = "/General.css";
     private static final String WINDOW_WIDTH_SMALL_KEY = "window.small.width";
     private static final String WINDOW_HEIGHT_SMALL_KEY = "window.small.height";
