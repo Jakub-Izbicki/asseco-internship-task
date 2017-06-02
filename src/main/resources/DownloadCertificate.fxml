@@ -22,7 +22,7 @@
             <children>
                 <Button fx:id="cancelDownloadCertificateButton" mnemonicParsing="false" onAction="#onCancel" text="%cancelDownloadCertificateButton" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                 <Button fx:id="downloadCerButton" layoutX="10.0" layoutY="40.0" mnemonicParsing="false" text="%downloadCerButton" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <Button fx:id="downladPemButton" layoutX="110.0" layoutY="40.0" mnemonicParsing="false" onAction="#onDownloadPem" text="%downladPemButton" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <Button fx:id="downloadPemButton" layoutX="110.0" layoutY="40.0" mnemonicParsing="false" onAction="#onDownloadPem" text="%downloadPemButton" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                 <Text fx:id="downloadCertificateText" strokeType="OUTSIDE" strokeWidth="0.0" text="%downloadCertificateText" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             </children>
         </GridPane>

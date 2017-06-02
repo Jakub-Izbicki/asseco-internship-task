@@ -19,5 +19,5 @@ public interface UserClient {
     Call<ApiResponse> createUser(@Header("Authorization") String token, @Body User newUser);
 
     @PUT("/user/{username}")
-    Call<Void> updateUser(@Header("Authorization") String token, @Path("username") String username, @Body User updatedUser);
+    Call<ApiResponse> updateUser(@Header("Authorization") String token, @Path("username") String username, @Body User updatedUser);
 }

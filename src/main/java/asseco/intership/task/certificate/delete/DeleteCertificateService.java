@@ -4,6 +4,7 @@ import asseco.intership.task.auth.Auth;
 import asseco.intership.task.base.AbstractService;
 import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.certificate.CertificateClient;
+import asseco.intership.task.error.RuntimeErrorController;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -20,7 +21,9 @@ class DeleteCertificateService extends AbstractService {
     @Inject
     public DeleteCertificateService(CertificateClient certificateClient,
                                     Provider<DeleteCertificateController> deleteCertificateControllerProvider,
-                                    Auth auth) {
+                                    Auth auth,
+                                    RuntimeErrorController runtimeErrorController) {
+        super(runtimeErrorController);
         this.certificateClient = certificateClient;
         this.deleteCertificateControllerProvider = deleteCertificateControllerProvider;
         this.auth = auth;
@@ -33,14 +36,16 @@ class DeleteCertificateService extends AbstractService {
                     public void onResponse(Call<ApiResponse> call, retrofit2.Response<ApiResponse> response) {
                         // because server returns 200 OK when delete failed
                         if (!STATUS_OK.equals(response.body().getStatus())) {
-                            System.out.println("DELETE CERT FAILED"); // TODO: implement error handling
+                            onFailure(null, null);
                         }
                         deleteCertificateControllerProvider.get().onCertificateDelete();
                     }
 
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable throwable) {
-                        System.out.println("DELETE CERT FAILED"); // TODO: implement error handling
+                        showErrorPopup(runtimeErrorController,
+                                deleteCertificateControllerProvider.get(),
+                                "runtimeErrorDeleteCertificate");
                     }
                 }
         );

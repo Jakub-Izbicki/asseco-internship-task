@@ -1,10 +1,12 @@
 package asseco.intership.task.certificate.create;
 
 import asseco.intership.task.auth.Auth;
+import asseco.intership.task.base.AbstractService;
 import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.certificate.CertificateClient;
 import asseco.intership.task.certificate.CertificateController;
 import asseco.intership.task.certificate.model.PemCertificateRaw;
+import asseco.intership.task.error.RuntimeErrorController;
 import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -21,7 +23,7 @@ import java.util.ResourceBundle;
 import static asseco.intership.task.base.AbstractController.DEFAULT_BUNDLE;
 import static java.nio.charset.Charset.defaultCharset;
 
-public class CreateCertificateService {
+public class CreateCertificateService extends AbstractService {
 
     private static final String FILE_CHOOSER_DESC =
             ResourceBundle.getBundle(DEFAULT_BUNDLE).getString("createCertificateFileChooserInfo");
@@ -37,7 +39,9 @@ public class CreateCertificateService {
     @Inject
     public CreateCertificateService(CertificateClient certificateClient,
                                     Provider<CertificateController> certificateControllerProvider,
-                                    Auth auth) {
+                                    Auth auth,
+                                    RuntimeErrorController runtimeErrorController) {
+        super(runtimeErrorController);
         this.certificateClient = certificateClient;
         this.certificateControllerProvider = certificateControllerProvider;
         this.auth = auth;
@@ -49,19 +53,26 @@ public class CreateCertificateService {
         try {
             pemCertificate.setRaw_bytes(Files.toString(certificateFile, defaultCharset()));
         } catch (IOException e) {
-            e.printStackTrace(); //TODO: add error handling
+            showErrorPopup(runtimeErrorController,
+                    certificateControllerProvider.get(),
+                    "runtimeErrorReadCertificateFromFile");
             return;
         }
         certificateClient.createCertificate(auth.getToken(), pemCertificate)
                 .enqueue(new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if (!statusEqualsOk(response)) {
+                            onFailure(null, null);
+                        }
                         certificateControllerProvider.get().initialize();
                     }
 
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable throwable) {
-                        System.out.println("CREATE CERT FAILED"); //TODO: implement error handling
+                        showErrorPopup(runtimeErrorController,
+                                certificateControllerProvider.get(),
+                                "runtimeErrorCreateCertificate");
                     }
                 });
     }

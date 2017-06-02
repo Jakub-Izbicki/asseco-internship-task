@@ -1,12 +1,18 @@
 package asseco.intership.task.user.base;
 
+import asseco.intership.task.base.AbstractService;
+import asseco.intership.task.error.RuntimeErrorController;
 import asseco.intership.task.user.model.User;
 import com.google.inject.Provider;
 import javafx.scene.text.Text;
 
 import static asseco.intership.task.util.validation.UserValidator.validateUser;
 
-public abstract class UserOperationService {
+public abstract class UserOperationService extends AbstractService {
+
+    protected UserOperationService(RuntimeErrorController runtimeErrorController) {
+        super(runtimeErrorController);
+    }
 
     protected boolean isUserValid(User user, Provider<? extends UserOperationController> provider, Text errorText) {
         switch (validateUser(user)) {

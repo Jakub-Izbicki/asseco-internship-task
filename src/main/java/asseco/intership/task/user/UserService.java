@@ -1,6 +1,8 @@
 package asseco.intership.task.user;
 
 import asseco.intership.task.auth.Auth;
+import asseco.intership.task.base.AbstractService;
+import asseco.intership.task.error.RuntimeErrorController;
 import asseco.intership.task.user.model.User;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -12,7 +14,7 @@ import retrofit2.Response;
 import java.util.List;
 
 @Singleton
-class UserService {
+class UserService extends AbstractService {
 
     private final Provider<UserController> usersControllerProvider;
     private final UserClient userClient;
@@ -22,7 +24,9 @@ class UserService {
     @Inject
     public UserService(Provider<UserController> usersControllerProvider,
                        Auth auth,
-                       UserClient userClient) {
+                       UserClient userClient,
+                       RuntimeErrorController runtimeErrorController) {
+        super(runtimeErrorController);
         this.usersControllerProvider = usersControllerProvider;
         this.auth = auth;
         this.userClient = userClient;
@@ -39,7 +43,9 @@ class UserService {
 
                     @Override
                     public void onFailure(Call<List<User>> call, Throwable throwable) {
-                        System.out.println("GET USERS FAILED"); //TODO: implement error handling
+                        showErrorPopup(runtimeErrorController,
+                                usersControllerProvider.get(),
+                                "runtimeErrorEditUser");
                     }
                 });
     }

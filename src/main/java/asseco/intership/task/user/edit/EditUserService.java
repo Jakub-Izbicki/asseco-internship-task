@@ -1,7 +1,9 @@
 package asseco.intership.task.user.edit;
 
 import asseco.intership.task.auth.Auth;
+import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.base.ClientFactory;
+import asseco.intership.task.error.RuntimeErrorController;
 import asseco.intership.task.user.UserClient;
 import asseco.intership.task.user.base.UserOperationService;
 import asseco.intership.task.user.model.User;
@@ -20,7 +22,10 @@ class EditUserService extends UserOperationService {
     private final Auth auth;
 
     @Inject
-    EditUserService(Provider<EditUserController> editUserControllerProvider, Auth auth) {
+    EditUserService(Provider<EditUserController> editUserControllerProvider,
+                    Auth auth,
+                    RuntimeErrorController runtimeErrorController) {
+        super(runtimeErrorController);
         this.editUserControllerProvider = editUserControllerProvider;
         this.userClient = ClientFactory.of(UserClient.class);
         this.auth = auth;
@@ -33,15 +38,20 @@ class EditUserService extends UserOperationService {
                 editUserControllerProvider.get().editUserErrorInfo)) {
             return;
         }
-        userClient.updateUser(auth.getToken(), updatedUser.getUsername(), updatedUser).enqueue(new Callback<Void>() {
+        userClient.updateUser(auth.getToken(), updatedUser.getUsername(), updatedUser).enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (!statusEqualsOk(response)) {
+                    onFailure(null, null);
+                }
                 editUserControllerProvider.get().onSuccessfulUserUpdate();
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable throwable) {
-                System.out.println("UPDATE USER FAILED"); //TODO: implement error handling
+            public void onFailure(Call<ApiResponse> call, Throwable throwable) {
+                showErrorPopup(runtimeErrorController,
+                        editUserControllerProvider.get(),
+                        "runtimeErrorEditUser");
             }
         });
     }

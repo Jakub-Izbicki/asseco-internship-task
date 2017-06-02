@@ -3,6 +3,7 @@ package asseco.intership.task.user.create;
 import asseco.intership.task.auth.Auth;
 import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.base.ClientFactory;
+import asseco.intership.task.error.RuntimeErrorController;
 import asseco.intership.task.user.UserClient;
 import asseco.intership.task.user.base.UserOperationService;
 import asseco.intership.task.user.model.User;
@@ -25,7 +26,10 @@ class CreateUserService extends UserOperationService {
     private final Auth auth;
 
     @Inject
-    CreateUserService(Provider<CreateUserController> createUserControllerProvider, Auth auth) {
+    CreateUserService(Provider<CreateUserController> createUserControllerProvider,
+                      Auth auth,
+                      RuntimeErrorController runtimeErrorController) {
+        super(runtimeErrorController);
         this.createUserControllerProvider = createUserControllerProvider;
         this.userClient = ClientFactory.of(UserClient.class);
         this.auth = auth;
@@ -48,12 +52,17 @@ class CreateUserService extends UserOperationService {
         userClient.createUser(auth.getToken(), newUser).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (!statusEqualsOk(response)) {
+                    onFailure(null, null);
+                }
                 createUserControllerProvider.get().onSuccessfulUserCreate();
             }
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable throwable) {
-                System.out.println("CREATE USER FAILED: " + throwable.getMessage());//TODO: error handling
+                showErrorPopup(runtimeErrorController,
+                        createUserControllerProvider.get(),
+                        "runtimeErrorCreateUser");
             }
         });
     }

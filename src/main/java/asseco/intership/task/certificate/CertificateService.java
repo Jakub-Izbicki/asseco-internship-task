@@ -3,6 +3,7 @@ package asseco.intership.task.certificate;
 import asseco.intership.task.auth.Auth;
 import asseco.intership.task.certificate.model.Certificate;
 import asseco.intership.task.certificate.model.PemCertificateRaw;
+import asseco.intership.task.error.RuntimeErrorController;
 import asseco.intership.task.util.CertFactory;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -21,15 +22,18 @@ class CertificateService {
     private final CertificateClient certificateClient;
     private final Provider<CertificateController> certificateControllerProvider;
     private final Auth auth;
+    private final RuntimeErrorController runtimeErrorController;
     private List<Certificate> certificates;
 
     @Inject
     public CertificateService(Provider<CertificateController> certificateControllerProvider,
                               Auth auth,
-                              CertificateClient certificateClient) {
+                              CertificateClient certificateClient,
+                              RuntimeErrorController runtimeErrorController) {
         this.certificateControllerProvider = certificateControllerProvider;
         this.auth = auth;
         this.certificateClient = certificateClient;
+        this.runtimeErrorController = runtimeErrorController;
     }
 
     void getCertificates() {
@@ -46,7 +50,9 @@ class CertificateService {
 
             @Override
             public void onFailure(Call<List<PemCertificateRaw>> call, Throwable throwable) {
-                System.out.println("GET CERTS FAILED"); //TODO: implement error handling
+                runtimeErrorController.showErrorPopup(
+                        certificateControllerProvider.get(),
+                        "runtimeErrorGetCertificates");
             }
         });
     }
