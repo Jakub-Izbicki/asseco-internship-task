@@ -4,7 +4,7 @@ import asseco.intership.task.base.AbstractService;
 import asseco.intership.task.certificate.model.Certificate;
 import asseco.intership.task.error.RuntimeErrorController;
 import asseco.intership.task.util.CertFactory;
-import asseco.intership.task.util.CertUtil;
+import asseco.intership.task.util.FileUtil;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
@@ -53,7 +53,7 @@ class DownloadCertificateService extends AbstractService {
         File selectedDirectory = new DirectoryChooser()
                 .showDialog(downloadCertificateControllerProvider.get().getStage());
         String filename = certificate.getCommonName() + certificate.getId();
-        CertUtil.save(
+        FileUtil.saveToFile(
                 selectedDirectory.getAbsolutePath(),
                 filename,
                 rawBytes,
