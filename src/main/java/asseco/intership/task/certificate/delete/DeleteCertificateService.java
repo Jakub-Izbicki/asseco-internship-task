@@ -32,7 +32,7 @@ class DeleteCertificateService extends AbstractService {
                     @Override
                     public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                         // because server returns 200 OK when delete failed
-                        if (response.body().getStatus() != STATUS_OK){
+                        if (!STATUS_OK.equals(response.body().getStatus())) {
                             System.out.println("DELETE CERT FAILED"); // TODO: implement error handling
                         }
                         deleteCertificateControllerProvider.get().onCertificateDelete();
