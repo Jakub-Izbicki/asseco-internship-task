@@ -5,7 +5,6 @@ import asseco.intership.task.certificate.CertificateController;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
@@ -38,12 +37,12 @@ public class DeleteCertificateController extends AbstractController {
     }
 
     @FXML
-    void onDelete(ActionEvent actionEvent) {
+    void onDelete() {
         deleteCertificateService.deleteCertificate(deletedCertificateId);
     }
 
     @FXML
-    void onCancel(ActionEvent actionEvent) {
+    void onCancel() {
         close();
     }
 

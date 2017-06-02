@@ -4,7 +4,6 @@ import asseco.intership.task.base.AbstractController;
 import asseco.intership.task.panel.PanelController;
 import asseco.intership.task.util.PropertiesGetter;
 import com.google.inject.Singleton;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -43,7 +42,7 @@ public class LoginController extends AbstractController {
     }
 
     @FXML
-    void onSignInButtonPress(ActionEvent actionEvent) {
+    void onSignInButtonPress() {
         disableSignInButton();
         loginService.login(usernameTextField.getText(), passwordTextField.getText());
     }

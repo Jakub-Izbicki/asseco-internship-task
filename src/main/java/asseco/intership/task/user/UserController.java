@@ -10,7 +10,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -74,13 +73,13 @@ public class UserController extends AbstractController {
     }
 
     @FXML
-    void onAddUserButtonPressed(ActionEvent actionEvent) {
+    void onAddUserButtonPressed() {
         createUserController.createStageAsPopup(this).show();
         createUserController.initialize();
     }
 
     @FXML
-    void onEditUserButtonPressed(ActionEvent actionEvent) {
+    void onEditUserButtonPressed() {
         editUserController.createStageAsPopup(this).show();
         editUserController.initialize();
     }

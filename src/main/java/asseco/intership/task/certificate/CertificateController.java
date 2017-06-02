@@ -8,7 +8,6 @@ import asseco.intership.task.certificate.model.Certificate;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -77,18 +76,18 @@ public class CertificateController extends AbstractController {
     }
 
     @FXML
-    void onAddCertificateButtonPressed(ActionEvent actionEvent) {
+    void onAddCertificateButtonPressed() {
         createCertificateService.createCertificate();
     }
 
     @FXML
-    void onDownloadCertificateButtonPressed(ActionEvent actionEvent) {
+    void onDownloadCertificateButtonPressed() {
         downloadCertificateController.createStageAsSmallPopup(this).show();
         downloadCertificateController.initialize();
     }
 
     @FXML
-    void onRemoveCertificateButtonPressed(ActionEvent actionEvent) {
+    void onRemoveCertificateButtonPressed() {
         deleteCertificateController.createStageAsSmallPopup(this).show();
         deleteCertificateController.initialize();
     }
