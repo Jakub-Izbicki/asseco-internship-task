@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Response {
+public class ApiResponse {
 
     private String status;
     private String message;

@@ -1,10 +1,10 @@
 package asseco.intership.task.certificate.create;
 
 import asseco.intership.task.auth.Auth;
+import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.certificate.CertificateClient;
 import asseco.intership.task.certificate.CertificateController;
 import asseco.intership.task.certificate.model.PemCertificateRaw;
-import asseco.intership.task.error.ApiResponse;
 import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.Provider;

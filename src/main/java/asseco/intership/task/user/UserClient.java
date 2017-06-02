@@ -1,6 +1,6 @@
 package asseco.intership.task.user;
 
-import asseco.intership.task.error.ApiResponse;
+import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.user.model.User;
 import retrofit2.Call;
 import retrofit2.http.*;

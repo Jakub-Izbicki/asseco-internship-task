@@ -2,7 +2,7 @@ package asseco.intership.task.certificate.delete;
 
 import asseco.intership.task.auth.Auth;
 import asseco.intership.task.base.AbstractService;
-import asseco.intership.task.base.Response;
+import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.certificate.CertificateClient;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -28,9 +28,9 @@ class DeleteCertificateService extends AbstractService {
 
     void deleteCertificate(String id) {
         certificateClient.deleteCertificate(auth.getToken(), id).enqueue(
-                new Callback<Response>() {
+                new Callback<ApiResponse>() {
                     @Override
-                    public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                    public void onResponse(Call<ApiResponse> call, retrofit2.Response<ApiResponse> response) {
                         // because server returns 200 OK when delete failed
                         if (!STATUS_OK.equals(response.body().getStatus())) {
                             System.out.println("DELETE CERT FAILED"); // TODO: implement error handling
@@ -39,7 +39,7 @@ class DeleteCertificateService extends AbstractService {
                     }
 
                     @Override
-                    public void onFailure(Call<Response> call, Throwable throwable) {
+                    public void onFailure(Call<ApiResponse> call, Throwable throwable) {
                         System.out.println("DELETE CERT FAILED"); // TODO: implement error handling
                     }
                 }

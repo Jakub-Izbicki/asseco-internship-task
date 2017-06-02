@@ -1,8 +1,7 @@
 package asseco.intership.task.certificate;
 
-import asseco.intership.task.base.Response;
+import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.certificate.model.PemCertificateRaw;
-import asseco.intership.task.error.ApiResponse;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -17,5 +16,5 @@ public interface CertificateClient {
     Call<ApiResponse> createCertificate(@Header("Authorization") String token, @Body PemCertificateRaw pemCertificateRaw);
 
     @DELETE("/cert/{certId}")
-    Call<Response> deleteCertificate(@Header("Authorization") String token, @Path("certId") String certId);
+    Call<ApiResponse> deleteCertificate(@Header("Authorization") String token, @Path("certId") String certId);
 }

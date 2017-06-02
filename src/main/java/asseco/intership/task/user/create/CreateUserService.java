@@ -1,8 +1,8 @@
 package asseco.intership.task.user.create;
 
 import asseco.intership.task.auth.Auth;
+import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.base.ClientFactory;
-import asseco.intership.task.error.ApiResponse;
 import asseco.intership.task.user.UserClient;
 import asseco.intership.task.user.base.UserOperationService;
 import asseco.intership.task.user.model.User;
