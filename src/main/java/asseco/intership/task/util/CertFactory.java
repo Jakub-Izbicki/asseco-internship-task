@@ -32,26 +32,22 @@ public final class CertFactory {
     public static List<Certificate> of(List<PemCertificateRaw> rawPemCertificates) {
         List<Certificate> certificates = new ArrayList<>();
         for (PemCertificateRaw rawCertificate : rawPemCertificates) {
-            try {
-                certificates.add(of(rawCertificate));
-            } catch (CertificateException e) {
-                e.printStackTrace();
-            }
+            certificates.add(of(rawCertificate));
         }
         return certificates;
     }
 
-    static Certificate of(PemCertificateRaw pemCertificateRaw)
-            throws CertificateException {
+    static Certificate of(PemCertificateRaw pemCertificateRaw) {
         String certificateNoHeaders = pemCertificateRaw.getRaw_bytes()
                 .replaceAll(X509Factory.BEGIN_CERT, EMPTY_STRING)
                 .replaceAll(X509Factory.END_CERT, EMPTY_STRING);
         X509Certificate x509Certificate = null;
         try {
+            System.out.println(new String(Base64.decode(certificateNoHeaders)));
             x509Certificate = (X509Certificate) CertificateFactory.getInstance(CERTIFICATE_X509)
                     .generateCertificate(new ByteArrayInputStream(Base64.decode(certificateNoHeaders)));
-        } catch (Base64DecodingException e) {
-            e.printStackTrace();
+        } catch (CertificateException | Base64DecodingException e) {
+            e.printStackTrace(); // TODO implemennt error handling
         }
         Certificate certificate = of(x509Certificate);
         certificate.setId(pemCertificateRaw.getId());
