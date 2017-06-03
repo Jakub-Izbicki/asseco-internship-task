@@ -121,8 +121,8 @@ public class UserController extends AbstractController {
 
     private void enableDefaultSorting() {
         Platform.runLater(() -> {
-            usernameColumn.setSortType(ASCENDING);
-            usersTableView.getSortOrder().add(usernameColumn);
+            lastnameColumn.setSortType(ASCENDING);
+            usersTableView.getSortOrder().add(lastnameColumn);
         });
     }
 
