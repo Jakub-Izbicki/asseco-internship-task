@@ -10,27 +10,16 @@ import asseco.intership.task.error.RuntimeErrorController;
 import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
 
-import static asseco.intership.task.base.AbstractController.DEFAULT_BUNDLE;
 import static java.nio.charset.Charset.defaultCharset;
 
 public class CreateCertificateService extends AbstractService {
-
-    private static final String FILE_CHOOSER_DESC =
-            ResourceBundle.getBundle(DEFAULT_BUNDLE).getString("createCertificateFileChooserInfo");
-    private static final String PEM_EXTENSION = "*.pem";
-    private static final String CER_EXTENSION = "*.cer";
-    private static final ExtensionFilter CERTIFICATE_EXTENSIONS =
-            new ExtensionFilter(FILE_CHOOSER_DESC, PEM_EXTENSION, CER_EXTENSION);
 
     private final Provider<CertificateController> certificateControllerProvider;
     private final CertificateClient certificateClient;
@@ -47,8 +36,7 @@ public class CreateCertificateService extends AbstractService {
         this.auth = auth;
     }
 
-    public void createCertificate() {
-        File certificateFile = loadCertificateFile();
+    public void createCertificate(File certificateFile) {
         PemCertificateRaw pemCertificate = new PemCertificateRaw();
         try {
             pemCertificate.setRaw_bytes(Files.toString(certificateFile, defaultCharset()));
@@ -79,11 +67,5 @@ public class CreateCertificateService extends AbstractService {
                                 "runtimeErrorCreateCertificate");
                     }
                 });
-    }
-
-    private File loadCertificateFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(CERTIFICATE_EXTENSIONS);
-        return fileChooser.showOpenDialog(certificateControllerProvider.get().getStage());
     }
 }

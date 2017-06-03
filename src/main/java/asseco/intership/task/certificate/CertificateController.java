@@ -13,7 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,6 +24,13 @@ import static asseco.intership.task.certificate.model.Certificate.*;
 
 @Singleton
 public class CertificateController extends AbstractController {
+
+    private static final String FILE_CHOOSER_DESC =
+            ResourceBundle.getBundle(DEFAULT_BUNDLE).getString("createCertificateFileChooserInfo");
+    private static final String PEM_EXTENSION = "*.pem";
+    private static final String CER_EXTENSION = "*.cer";
+    private static final FileChooser.ExtensionFilter CERTIFICATE_EXTENSIONS =
+            new FileChooser.ExtensionFilter(FILE_CHOOSER_DESC, PEM_EXTENSION, CER_EXTENSION);
 
     @FXML
     private TableView<Certificate> certTableView;
@@ -77,7 +86,7 @@ public class CertificateController extends AbstractController {
 
     @FXML
     void onAddCertificateButtonPressed() {
-        createCertificateService.createCertificate();
+        createCertificateService.createCertificate(loadCertificateFile());
     }
 
     @FXML
@@ -94,6 +103,12 @@ public class CertificateController extends AbstractController {
 
     void showCertificates(List<Certificate> certificates) {
         certTableView.setItems(FXCollections.observableList(certificates));
+    }
+
+    File loadCertificateFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(CERTIFICATE_EXTENSIONS);
+        return fileChooser.showOpenDialog(getStage());
     }
 
     private void setUpDisabledButtons() {
