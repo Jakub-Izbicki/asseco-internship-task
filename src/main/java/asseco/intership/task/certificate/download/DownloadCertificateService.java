@@ -6,7 +6,6 @@ import asseco.intership.task.error.RuntimeErrorController;
 import asseco.intership.task.util.FileUtil;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,17 +25,24 @@ class DownloadCertificateService extends AbstractService {
         this.downloadCertificateControllerProvider = downloadCertificateControllerProvider;
     }
 
-    void downloadPem(Certificate certificate) {
-        download(certificate, certificate.getRawData().getBytes(), PEM_EXTENSION);
+    void downloadPem(Certificate certificate, File selectedDirectory) {
+        download(certificate,
+                certificate.getRawData().getBytes(),
+                PEM_EXTENSION,
+                selectedDirectory);
     }
 
-    void downloadCer(Certificate certificate) {
-        download(certificate, certificate.getRawData().getBytes(), CER_EXTENSION);
+    void downloadCer(Certificate certificate, File selectedDirectory) {
+        download(certificate,
+                certificate.getRawData().getBytes(),
+                CER_EXTENSION,
+                selectedDirectory);
     }
 
-    private void download(Certificate certificate, byte[] rawBytes, String extension) {
-        File selectedDirectory = new DirectoryChooser()
-                .showDialog(downloadCertificateControllerProvider.get().getStage());
+    private void download(Certificate certificate,
+                          byte[] rawBytes,
+                          String extension,
+                          File selectedDirectory) {
         String filename = certificate.getCommonName() + certificate.getId();
         try {
             FileUtil.saveToFile(
