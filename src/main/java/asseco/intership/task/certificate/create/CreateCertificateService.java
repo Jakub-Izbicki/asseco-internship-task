@@ -43,7 +43,8 @@ public class CreateCertificateService extends AbstractService {
         } catch (IOException e) {
             showErrorPopup(runtimeErrorController,
                     certificateControllerProvider.get(),
-                    "runtimeErrorReadCertificateFromFile");
+                    "runtimeErrorReadCertificateFromFile",
+                    e);
             return;
         }
         createCertificate(pemCertificate);
@@ -64,7 +65,8 @@ public class CreateCertificateService extends AbstractService {
                     public void onFailure(Call<ApiResponse> call, Throwable throwable) {
                         showErrorPopup(runtimeErrorController,
                                 certificateControllerProvider.get(),
-                                "runtimeErrorCreateCertificate");
+                                "runtimeErrorCreateCertificate",
+                                throwable);
                     }
                 });
     }

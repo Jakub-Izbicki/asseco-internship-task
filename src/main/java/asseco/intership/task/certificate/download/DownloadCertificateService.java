@@ -50,10 +50,11 @@ class DownloadCertificateService extends AbstractService {
                     filename,
                     rawBytes,
                     extension);
-        } catch (IOException e1) {
+        } catch (IOException e) {
             runtimeErrorController.showErrorPopup(
                     downloadCertificateControllerProvider.get(),
-                    "runtimeErrorDownloadCertificate");
+                    "runtimeErrorDownloadCertificate",
+                    e);
         }
     }
 }

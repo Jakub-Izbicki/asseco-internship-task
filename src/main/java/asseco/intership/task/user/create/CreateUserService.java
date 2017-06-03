@@ -63,7 +63,8 @@ class CreateUserService extends UserOperationService {
             public void onFailure(Call<ApiResponse> call, Throwable throwable) {
                 showErrorPopup(runtimeErrorController,
                         createUserControllerProvider.get(),
-                        "runtimeErrorCreateUser");
+                        "runtimeErrorCreateUser",
+                        throwable);
             }
         });
     }
@@ -75,7 +76,8 @@ class CreateUserService extends UserOperationService {
         } catch (IOException e) {
             showErrorPopup(runtimeErrorController,
                     createUserControllerProvider.get(),
-                    "runtimeErrorCreateUser");
+                    "runtimeErrorCreateUser",
+                    e);
         }
         //because server returns OK when user not found
         return !(foundUser == null || (foundUser.body().getUsername() == null));

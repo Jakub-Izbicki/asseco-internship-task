@@ -13,9 +13,12 @@ public abstract class AbstractService {
         this.runtimeErrorController = runtimeErrorController;
     }
 
-    protected void showErrorPopup(RuntimeErrorController runtimeErrorController, AbstractController parent, String messageKey) {
+    protected void showErrorPopup(RuntimeErrorController runtimeErrorController,
+                                  AbstractController parent,
+                                  String messageKey,
+                                  Throwable throwable) {
         Platform.runLater(() -> {
-            runtimeErrorController.showErrorPopup(parent, messageKey);
+            runtimeErrorController.showErrorPopup(parent, messageKey, throwable);
         });
     }
 

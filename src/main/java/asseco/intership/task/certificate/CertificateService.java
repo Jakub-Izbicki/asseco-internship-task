@@ -52,7 +52,8 @@ class CertificateService {
             public void onFailure(Call<List<PemCertificateRaw>> call, Throwable throwable) {
                 runtimeErrorController.showErrorPopup(
                         certificateControllerProvider.get(),
-                        "runtimeErrorGetCertificates");
+                        "runtimeErrorGetCertificates",
+                        throwable);
             }
         });
     }

@@ -45,7 +45,8 @@ class UserService extends AbstractService {
                     public void onFailure(Call<List<User>> call, Throwable throwable) {
                         showErrorPopup(runtimeErrorController,
                                 usersControllerProvider.get(),
-                                "runtimeErrorEditUser");
+                                "runtimeErrorEditUser",
+                                throwable);
                     }
                 });
     }

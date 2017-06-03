@@ -51,7 +51,8 @@ class EditUserService extends UserOperationService {
             public void onFailure(Call<ApiResponse> call, Throwable throwable) {
                 showErrorPopup(runtimeErrorController,
                         editUserControllerProvider.get(),
-                        "runtimeErrorEditUser");
+                        "runtimeErrorEditUser",
+                        throwable);
             }
         });
     }

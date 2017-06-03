@@ -45,7 +45,8 @@ class DeleteCertificateService extends AbstractService {
                     public void onFailure(Call<ApiResponse> call, Throwable throwable) {
                         showErrorPopup(runtimeErrorController,
                                 deleteCertificateControllerProvider.get(),
-                                "runtimeErrorDeleteCertificate");
+                                "runtimeErrorDeleteCertificate",
+                                throwable);
                     }
                 }
         );
