@@ -41,7 +41,7 @@ class EditUserService extends UserOperationService {
         userClient.updateUser(auth.getToken(), updatedUser.getUsername(), updatedUser).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if (!statusEqualsOk(response)) {
+                if (!isStatusOk(response)) {
                     onFailure(null, null);
                 }
                 editUserControllerProvider.get().onSuccessfulUserUpdate();

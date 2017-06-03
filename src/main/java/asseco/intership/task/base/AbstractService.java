@@ -19,7 +19,7 @@ public abstract class AbstractService {
         });
     }
 
-    protected boolean statusEqualsOk(Response<ApiResponse> response) {
+    protected boolean isStatusOk(Response<ApiResponse> response) {
         return STATUS_OK.equals(response.body().getStatus());
     }
 }

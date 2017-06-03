@@ -53,7 +53,7 @@ class CreateUserService extends UserOperationService {
         userClient.createUser(auth.getToken(), newUser).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if (!statusEqualsOk(response)) {
+                if (!isStatusOk(response)) {
                     onFailure(null, null);
                 }
                 createUserControllerProvider.get().onSuccessfulUserCreate();
