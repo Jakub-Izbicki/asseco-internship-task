@@ -2,7 +2,6 @@ package asseco.intership.task.user.edit;
 
 import asseco.intership.task.auth.Auth;
 import asseco.intership.task.base.ApiResponse;
-import asseco.intership.task.base.ClientFactory;
 import asseco.intership.task.error.RuntimeErrorController;
 import asseco.intership.task.user.UserClient;
 import asseco.intership.task.user.base.UserOperationService;
@@ -24,10 +23,11 @@ class EditUserService extends UserOperationService {
     @Inject
     EditUserService(Provider<EditUserController> editUserControllerProvider,
                     Auth auth,
-                    RuntimeErrorController runtimeErrorController) {
+                    RuntimeErrorController runtimeErrorController,
+                    UserClient userClient) {
         super(runtimeErrorController);
         this.editUserControllerProvider = editUserControllerProvider;
-        this.userClient = ClientFactory.of(UserClient.class);
+        this.userClient = userClient;
         this.auth = auth;
     }
 

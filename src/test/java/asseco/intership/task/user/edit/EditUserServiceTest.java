@@ -1,4 +1,4 @@
-package asseco.intership.task.user.create;
+package asseco.intership.task.user.edit;
 
 import asseco.intership.task.AbstractServiceTest;
 import asseco.intership.task.auth.Auth;
@@ -21,37 +21,34 @@ import java.io.IOException;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(DataProviderRunner.class)
-public class CreateUserServiceTest extends AbstractServiceTest {
+public class EditUserServiceTest extends AbstractServiceTest {
 
     @Mock
-    private Provider<CreateUserController> createUserControllerProvider;
+    private Provider<EditUserController> editUserControllerProvider;
     @Mock
     private Auth auth;
     @Mock
     private UserClient userClient;
     @InjectMocks
-    private CreateUserService createUserService;
+    private EditUserService editUserService;
     @Mock
-    private CreateUserController createUserController;
-    @Mock
-    private Call<User> userCall;
+    private EditUserController editUserController;
     @Mock
     private Call<ApiResponse> apiResponseCall;
 
     @Before
     public void setUp() throws IOException {
         initMocks(this);
-        when(createUserControllerProvider.get()).thenReturn(createUserController);
+        when(editUserControllerProvider.get()).thenReturn(editUserController);
         when(auth.getToken()).thenReturn(TOKEN);
-        when(userClient.getUser(anyString(), any())).thenReturn(userCall);
-        when(userClient.createUser(anyString(), any())).thenReturn(apiResponseCall);
-        doNothing().when(createUserController).onSuccessfulUserCreate();
-        doAnswer(invocationOnMock -> null).when(userCall).execute();
+        when(userClient.updateUser(anyString(), anyString(), any())).thenReturn(apiResponseCall);
+        doNothing().when(editUserController).onSuccessfulUserUpdate();
         doAnswer(invocationOnMock -> {
-            createUserController.onSuccessfulUserCreate();
+            editUserController.onSuccessfulUserUpdate();
             return null;
         }).when(apiResponseCall).enqueue(any());
     }
@@ -59,12 +56,11 @@ public class CreateUserServiceTest extends AbstractServiceTest {
     @Test
     @UseDataProvider(value = "getValidUser", location = UserDataProvider.class)
     public void shouldCreateUser(User validUser) throws IOException {
-        createUserService.createUser(validUser);
+        editUserService.updateUser(validUser);
 
-        verify(userCall).execute();
         verify(apiResponseCall).enqueue(any());
-        verify(auth, times(2)).getToken();
-        verify(createUserController).onSuccessfulUserCreate();
-        verifyNoMoreInteractions(userCall, apiResponseCall, auth, createUserController);
+        verify(auth).getToken();
+        verify(editUserController).onSuccessfulUserUpdate();
+        verifyNoMoreInteractions(apiResponseCall, auth, editUserController);
     }
 }
