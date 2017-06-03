@@ -2,7 +2,6 @@ package asseco.intership.task.user.create;
 
 import asseco.intership.task.auth.Auth;
 import asseco.intership.task.base.ApiResponse;
-import asseco.intership.task.base.ClientFactory;
 import asseco.intership.task.error.RuntimeErrorController;
 import asseco.intership.task.user.UserClient;
 import asseco.intership.task.user.base.UserOperationService;
@@ -28,10 +27,11 @@ class CreateUserService extends UserOperationService {
     @Inject
     CreateUserService(Provider<CreateUserController> createUserControllerProvider,
                       Auth auth,
-                      RuntimeErrorController runtimeErrorController) {
+                      RuntimeErrorController runtimeErrorController,
+                      UserClient userClient) {
         super(runtimeErrorController);
         this.createUserControllerProvider = createUserControllerProvider;
-        this.userClient = ClientFactory.of(UserClient.class);
+        this.userClient = userClient;
         this.auth = auth;
     }
 
@@ -42,8 +42,9 @@ class CreateUserService extends UserOperationService {
                 createUserControllerProvider.get().addUserErrorInfo)) {
             return;
         }
-        if (isUsernameOk(newUser.getUsername())) {
+        if (!isUsernameOk(newUser.getUsername())) {
             createUserControllerProvider.get().onUsernameFormatNotOk();
+            return;
         }
         if (userExists(newUser)) {
             createUserControllerProvider.get().onUserAlreadyExists();
@@ -72,7 +73,9 @@ class CreateUserService extends UserOperationService {
         try {
             foundUser = userClient.getUser(auth.getToken(), user.getUsername()).execute();
         } catch (IOException e) {
-            e.printStackTrace();
+            showErrorPopup(runtimeErrorController,
+                    createUserControllerProvider.get(),
+                    "runtimeErrorCreateUser");
         }
         //because server returns OK when user not found
         return !(foundUser == null || (foundUser.body().getUsername() == null));
