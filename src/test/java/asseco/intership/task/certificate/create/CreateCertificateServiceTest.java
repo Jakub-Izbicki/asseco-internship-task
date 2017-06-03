@@ -5,7 +5,6 @@ import asseco.intership.task.auth.Auth;
 import asseco.intership.task.base.ApiResponse;
 import asseco.intership.task.certificate.CertificateClient;
 import asseco.intership.task.certificate.CertificateController;
-import asseco.intership.task.error.RuntimeErrorController;
 import com.google.inject.Provider;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,8 +31,6 @@ public class CreateCertificateServiceTest extends AbstractServiceTest {
     private Provider<CertificateController> certificateControllerProvider;
     @Mock
     private Auth auth;
-    @Mock
-    private RuntimeErrorController runtimeErrorController;
     @InjectMocks
     private CreateCertificateService createCertificateService;
     @Mock
