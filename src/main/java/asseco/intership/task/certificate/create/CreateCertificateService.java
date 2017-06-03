@@ -58,6 +58,10 @@ public class CreateCertificateService extends AbstractService {
                     "runtimeErrorReadCertificateFromFile");
             return;
         }
+        createCertificate(pemCertificate);
+    }
+
+    private void createCertificate(PemCertificateRaw pemCertificate) {
         certificateClient.createCertificate(auth.getToken(), pemCertificate)
                 .enqueue(new Callback<ApiResponse>() {
                     @Override
