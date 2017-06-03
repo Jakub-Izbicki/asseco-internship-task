@@ -28,19 +28,19 @@ public class PanelController extends AbstractController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initPanelSubstages();
-        panelAnchorPane.getChildren().clear();
-        panelAnchorPane.getChildren().add(userController.getRootParent());
+        onCertificatesButtonPressed();
+        onUsersButtonPressed();
     }
 
     @FXML
-    void onCertificatesButtonPressed() {
+    private void onCertificatesButtonPressed() {
         panelAnchorPane.getChildren().clear();
         panelAnchorPane.getChildren().add(certificateController.getRootParent());
         certificateController.initialize();
     }
 
     @FXML
-    void onUsersButtonPressed() {
+    private void onUsersButtonPressed() {
         panelAnchorPane.getChildren().clear();
         panelAnchorPane.getChildren().add(userController.getRootParent());
         userController.initialize();
