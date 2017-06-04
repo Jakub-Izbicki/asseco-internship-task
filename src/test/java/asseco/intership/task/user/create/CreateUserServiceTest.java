@@ -39,7 +39,7 @@ public class CreateUserServiceTest extends AbstractServiceTest {
     @Mock
     private Call<User> userCall;
     @Mock
-    private Call<ApiResponse> apiResponseCall;
+    private Call<ApiResponse> createUserCall;
 
     @Before
     public void setUp() throws IOException {
@@ -47,13 +47,13 @@ public class CreateUserServiceTest extends AbstractServiceTest {
         when(createUserControllerProvider.get()).thenReturn(createUserController);
         when(auth.getToken()).thenReturn(TOKEN);
         when(userClient.getUser(anyString(), any())).thenReturn(userCall);
-        when(userClient.createUser(anyString(), any())).thenReturn(apiResponseCall);
+        when(userClient.createUser(anyString(), any())).thenReturn(createUserCall);
         doNothing().when(createUserController).onSuccessfulUserCreate();
         doAnswer(invocationOnMock -> null).when(userCall).execute();
         doAnswer(invocationOnMock -> {
             createUserController.onSuccessfulUserCreate();
             return null;
-        }).when(apiResponseCall).enqueue(any());
+        }).when(createUserCall).enqueue(any());
     }
 
     @Test
@@ -62,9 +62,9 @@ public class CreateUserServiceTest extends AbstractServiceTest {
         createUserService.createUser(validUser);
 
         verify(userCall).execute();
-        verify(apiResponseCall).enqueue(any());
+        verify(createUserCall).enqueue(any());
         verify(auth, times(2)).getToken();
         verify(createUserController).onSuccessfulUserCreate();
-        verifyNoMoreInteractions(userCall, apiResponseCall, auth, createUserController);
+        verifyNoMoreInteractions(userCall, createUserCall, auth, createUserController);
     }
 }

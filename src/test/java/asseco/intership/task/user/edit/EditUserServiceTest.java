@@ -38,19 +38,19 @@ public class EditUserServiceTest extends AbstractServiceTest {
     @Mock
     private EditUserController editUserController;
     @Mock
-    private Call<ApiResponse> apiResponseCall;
+    private Call<ApiResponse> updateUserCall;
 
     @Before
     public void setUp() throws IOException {
         initMocks(this);
         when(editUserControllerProvider.get()).thenReturn(editUserController);
         when(auth.getToken()).thenReturn(TOKEN);
-        when(userClient.updateUser(anyString(), anyString(), any())).thenReturn(apiResponseCall);
+        when(userClient.updateUser(anyString(), anyString(), any())).thenReturn(updateUserCall);
         doNothing().when(editUserController).onSuccessfulUserUpdate();
         doAnswer(invocationOnMock -> {
             editUserController.onSuccessfulUserUpdate();
             return null;
-        }).when(apiResponseCall).enqueue(any());
+        }).when(updateUserCall).enqueue(any());
     }
 
     @Test
@@ -58,9 +58,9 @@ public class EditUserServiceTest extends AbstractServiceTest {
     public void shouldCreateUser(User validUser) throws IOException {
         editUserService.updateUser(validUser);
 
-        verify(apiResponseCall).enqueue(any());
+        verify(updateUserCall).enqueue(any());
         verify(auth).getToken();
         verify(editUserController).onSuccessfulUserUpdate();
-        verifyNoMoreInteractions(apiResponseCall, auth, editUserController);
+        verifyNoMoreInteractions(updateUserCall, auth, editUserController);
     }
 }

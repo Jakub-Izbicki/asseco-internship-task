@@ -36,19 +36,19 @@ public class CreateCertificateServiceTest extends AbstractServiceTest {
     @Mock
     private CertificateController certificateController;
     @Mock
-    private Call<ApiResponse> apiResponseCall;
+    private Call<ApiResponse> createCertificateCall;
 
     @Before
     public void setUp() {
         initMocks(this);
         when(certificateControllerProvider.get()).thenReturn(certificateController);
         when(auth.getToken()).thenReturn(TOKEN);
-        when(certificateClient.createCertificate(anyString(), any())).thenReturn(apiResponseCall);
+        when(certificateClient.createCertificate(anyString(), any())).thenReturn(createCertificateCall);
         doNothing().when(certificateController).initialize();
         doAnswer(invocationOnMock -> {
             certificateController.initialize();
             return null;
-        }).when(apiResponseCall).enqueue(any());
+        }).when(createCertificateCall).enqueue(any());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class CreateCertificateServiceTest extends AbstractServiceTest {
 
         verify(certificateController).initialize();
         verify(auth).getToken();
-        verify(apiResponseCall).enqueue(any());
-        verifyNoMoreInteractions(certificateController, auth, apiResponseCall);
+        verify(createCertificateCall).enqueue(any());
+        verifyNoMoreInteractions(certificateController, auth, createCertificateCall);
     }
 }

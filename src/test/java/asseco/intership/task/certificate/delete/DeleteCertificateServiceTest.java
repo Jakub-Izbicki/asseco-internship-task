@@ -31,19 +31,19 @@ public class DeleteCertificateServiceTest extends AbstractServiceTest {
     @Mock
     private DeleteCertificateController deleteCertificateController;
     @Mock
-    private Call<ApiResponse> apiResponseCall;
+    private Call<ApiResponse> deleteCertificateCall;
 
     @Before
     public void setUp() {
         initMocks(this);
         when(deleteCertificateControllerProvider.get()).thenReturn(deleteCertificateController);
         when(auth.getToken()).thenReturn(TOKEN);
-        when(certificateClient.deleteCertificate(anyString(), any())).thenReturn(apiResponseCall);
+        when(certificateClient.deleteCertificate(anyString(), any())).thenReturn(deleteCertificateCall);
         doNothing().when(deleteCertificateController).onCertificateDelete();
         doAnswer(invocationOnMock -> {
             deleteCertificateController.onCertificateDelete();
             return null;
-        }).when(apiResponseCall).enqueue(any());
+        }).when(deleteCertificateCall).enqueue(any());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class DeleteCertificateServiceTest extends AbstractServiceTest {
 
         verify(deleteCertificateController).onCertificateDelete();
         verify(auth).getToken();
-        verify(apiResponseCall).enqueue(any());
-        verifyNoMoreInteractions(deleteCertificateController, auth, apiResponseCall);
+        verify(deleteCertificateCall).enqueue(any());
+        verifyNoMoreInteractions(deleteCertificateController, auth, deleteCertificateCall);
     }
 }
