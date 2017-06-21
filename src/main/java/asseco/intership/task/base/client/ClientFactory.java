@@ -1,4 +1,4 @@
-package asseco.intership.task.base;
+package asseco.intership.task.base.client;
 
 import asseco.intership.task.util.PropertiesGetter;
 import retrofit2.Retrofit;

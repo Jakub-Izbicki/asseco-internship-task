@@ -1,6 +1,6 @@
 package asseco.intership.task;
 
-import asseco.intership.task.base.ClientModule;
+import asseco.intership.task.base.client.ClientModule;
 import asseco.intership.task.login.LoginController;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
